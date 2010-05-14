@@ -1,0 +1,18 @@
+
+TYPICAL DISPATCH ROUTE: /entity-type/identifier/subsystem/method
+
+This, rather than including the entity type and identifier as arguments because
+we want the subsystem implementation to look like a Role::Subsystem.  This will
+make the interface more natural in Perl land, where constantly doing:
+
+  EntityManager::Subsystem->method($entity, $arg)
+
+would be weird.  It also lets us use the tried and true method of changing the
+subsystem implementation on a per-account/list/whatever basis.
+
+So, we'll end up with something like:
+
+  my $entity = EntityClass->find($identifier, $context);
+
+The context will allow us to throw a Permission error as soon as possible.
+
