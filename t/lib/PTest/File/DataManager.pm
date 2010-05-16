@@ -1,6 +1,7 @@
 package PTest::File::DataManager;
-use Moose;
+use Prism::Publisher;
 
+use MooseX::Types::Moose qw(Int);
 use Moose::Util::TypeConstraints;
 
 with 'Role::Subsystem' => {
@@ -15,6 +16,13 @@ with 'Role::Subsystem' => {
   },
 };
 
-sub size { -s $_[0]->filename }
+publish size => { } => sub { -s $_[0]->filename };
+
+publish size_plus => { plus => Int } => sub {
+  my ($self, $arg) = @_;
+  my $plus = $arg->{plus};
+
+  $plus + -s $_[0]->filename;
+};
 
 1;

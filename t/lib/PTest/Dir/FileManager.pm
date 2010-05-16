@@ -1,5 +1,5 @@
 package PTest::Dir::FileManager;
-use Moose;
+use Prism::Publisher;
 
 use Moose::Util::TypeConstraints;
 
@@ -15,7 +15,7 @@ with 'Role::Subsystem' => {
   },
 };
 
-sub contents {
+publish contents => {} => sub {
   my ($self) = @_;
 
   my $dirname = $self->dirname;
@@ -28,9 +28,9 @@ sub contents {
   }
 
   return \@entities;
-}
+};
 
-sub tree {
+publish tree => {} => sub {
   my ($self) = @_;
 
   my $dirname = $self->dirname;
@@ -44,6 +44,6 @@ sub tree {
   }
 
   return \@entities;
-}
+};
 
 1;

@@ -21,6 +21,8 @@ sub jdiag { diag($JSON->encode($_[0])) }
   jdiag($pack);
 
   jdiag( ppack( $file->data_mgr->size ));
+
+  jdiag( ppack( $file->data_mgr->size_plus({ plus => 1_000 }) ));
 }
 
 {
