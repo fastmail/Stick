@@ -1,4 +1,6 @@
 
+## Paths to Methods
+
 TYPICAL DISPATCH ROUTE: /entity-type/identifier/subsystem/method
 
 This, rather than including the entity type and identifier as arguments because
@@ -16,3 +18,10 @@ So, we'll end up with something like:
 
 The context will allow us to throw a Permission error as soon as possible.
 
+## Core Method Publication
+
+Some early experimenting suggests that we'll want some public methods on
+nonsubsytems.  I suggest we do one of these things:
+
+1. /entity-type/identifier/method -- the lack of "subsystem" means it's core
+2. reserve a subsystem name globally for "core" methods
