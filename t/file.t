@@ -5,32 +5,40 @@ use Test::More;
 use lib 't/lib';
 
 use JSON 2;
+use Prism::Util qw(ppack);
+use PTest::Dir;
 use PTest::File;
 use Scalar::Util qw(blessed);
 
 my $JSON = JSON->new->ascii(1)->convert_blessed(1)->allow_blessed(1);
 
-sub TOP_LEVEL_PRISM_PACK {
-  return { value => $_[0] } unless ref $_[0];
-  return $_[0] if ref $_[0] and not blessed $_[0];
-  return $_[0]->PRISM_PACK if $_[0]->can('PRISM_PACK');
-  die "no route to pack";
-}
+sub jdiag { diag($JSON->encode($_[0])) }
 
 {
   my $file = PTest::File->new({ filename => 't/file.t' });
-  my $pack = TOP_LEVEL_PRISM_PACK($file);
+  my $pack = ppack($file);
 
-  diag($JSON->encode($pack));
+  jdiag($pack);
 
-  diag($JSON->encode( TOP_LEVEL_PRISM_PACK( $file->data_mgr->size )));
+  jdiag( ppack( $file->data_mgr->size ));
 }
 
 {
   my $file = PTest::File->new({ filename => 't/bogus.txt' });
-  my $pack = $file->PRISM_PACK;
+  my $pack = ppack($file);
 
-  diag($JSON->encode($pack));
+  jdiag($pack);
+}
+
+{
+  my $dir  = PTest::Dir->new({ dirname => 't' });
+  my $pack = ppack($dir);
+
+  jdiag($pack);
+
+  jdiag( ppack($dir->file_mgr->contents) );
+
+  jdiag( ppack($dir->file_mgr->tree) );
 }
 
 done_testing;
