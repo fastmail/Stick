@@ -1,9 +1,9 @@
+#!perl
 use strict;
 use warnings;
+use lib qw(lib t/lib);
 
-use lib 'lib';
-use lib 't/lib';
-
+use Data::Dumper;
 use JSON 2;
 use PTest::File;
 use PTest::Dir;
@@ -16,57 +16,72 @@ my %map = (
   dir  => 'PTest::Dir',
 );
 
-$|++;
-printf "/type/ident/subsystem/method\n";
-printf "ENTER TYPE (%s)\n> ", join(q{, }, sort keys %map);
-my $type = <STDIN>;
-chomp $type;
+sub getline {
+  my $line = <STDIN>;
+  die "\nERROR: input stream terminated\n" unless defined $line;
+  chomp $line;
+  return $line;
+}
 
-die "invalid type\n" unless my $class = $map{ $type };
+$|++;
+printf "BUILDING UP /type/ident/subsystem/method\n\n";
+
+my ($class);
+TYPE: while (1) {
+  printf "ENTER TYPE (%s)\n> ", join(q{, }, sort keys %map);
+  my $type = getline;
+
+  last TYPE if $class = $map{ $type };
+  warn "ERROR: invalid type\n\n"
+}
 
 print "ENTER IDENT\n> ";
-my $ident = <STDIN>;
-chomp $ident;
+my $ident = getline;
 
 my $obj = obj($class)->coerce($ident);
 
-die "couldn't make object\n" unless $obj;
+my @managers = grep { s/_mgr\z// } $class->meta->get_all_method_names;
 
-my @managers = map  { s/_mgr//; $_ }
-               grep { /_mgr\z/ } 
-               $class->meta->get_all_method_names;
+my ($mgr);
+SUBSYSTEM: while (1) {
+  printf "ENTER SUBSYSTEM (%s)\n> ", join(q{, }, sort @managers);
+  my $subsystem = getline;
 
-printf "ENTER SUBSYSTEM (%s)\n> ", join(q{, }, sort @managers);
-my $subsystem = <STDIN>;
-chomp $subsystem;
+  if (grep { $_ eq $subsystem } @managers) {
+    my $method = "$subsystem\_mgr";
+    $mgr = $obj->$method;
+    last SUBSYSTEM;
+  }
 
-die "invalid subsytem\n" unless grep { $_ eq $subsystem } @managers;
-
-my $mgr = do {
-  my $method = "$subsystem\_mgr";
-  $obj->$method;
-};
+  warn "ERRRO: invalid subsytem\n\n"
+}
 
 my %method = map  { $_->name => $_ }
              grep { $_->isa('Prism::Publisher::PublishedMethod') }
              $mgr->meta->get_all_methods;
 
-printf "ENTER METHOD (%s)\n> ", join(q{, }, sort keys %method);
-my $mgr_method = <STDIN>;
-chomp $mgr_method;
+my ($mgr_method, $method);
+MGR_METHOD: while (1) {
+  printf "ENTER METHOD (%s)\n> ", join(q{, }, sort keys %method);
+  $mgr_method = getline;
 
-die "invalid method\n" unless my $method = $method{ $mgr_method };
+  last MGR_METHOD if $method = $method{ $mgr_method };
+  warn "ERROR: invalid method\n\n";
+}
 
 my $signature = $method->signature;
 
 my %arg;
 for my $key (keys %$signature) {
-  print "$key> ";
-  my $value = <STDIN>;
-  chomp $value;
-  $arg{ $key } = $value;
+  my $type = $signature->{$key};
+  print "$key ($type)> ";
+  $arg{ $key } = getline;
 }
 
 my $rv = $mgr->$mgr_method(\%arg);
 
-print $JSON->encode( ppack($rv) );
+my $pack = ppack($rv);
+print "=== result: Raw Perl ======\n";
+print Data::Dumper::Dumper($rv);
+print "=== result: Packed JSON ===\n";
+print $JSON->encode( $pack );
