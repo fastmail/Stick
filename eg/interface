@@ -1,0 +1,72 @@
+use strict;
+use warnings;
+
+use lib 'lib';
+use lib 't/lib';
+
+use JSON 2;
+use PTest::File;
+use PTest::Dir;
+use Prism::Util -all;
+
+my $JSON = JSON->new->ascii->pretty->convert_blessed->allow_blessed;
+
+my %map = (
+  file => 'PTest::File',
+  dir  => 'PTest::Dir',
+);
+
+$|++;
+printf "/type/ident/subsystem/method\n";
+printf "ENTER TYPE (%s)\n> ", join(q{, }, sort keys %map);
+my $type = <STDIN>;
+chomp $type;
+
+die "invalid type\n" unless my $class = $map{ $type };
+
+print "ENTER IDENT\n> ";
+my $ident = <STDIN>;
+chomp $ident;
+
+my $obj = obj($class)->coerce($ident);
+
+die "couldn't make object\n" unless $obj;
+
+my @managers = map  { s/_mgr//; $_ }
+               grep { /_mgr\z/ } 
+               $class->meta->get_all_method_names;
+
+printf "ENTER SUBSYSTEM (%s)\n> ", join(q{, }, sort @managers);
+my $subsystem = <STDIN>;
+chomp $subsystem;
+
+die "invalid subsytem\n" unless grep { $_ eq $subsystem } @managers;
+
+my $mgr = do {
+  my $method = "$subsystem\_mgr";
+  $obj->$method;
+};
+
+my %method = map  { $_->name => $_ }
+             grep { $_->isa('Prism::Publisher::PublishedMethod') }
+             $mgr->meta->get_all_methods;
+
+printf "ENTER METHOD (%s)\n> ", join(q{, }, sort keys %method);
+my $mgr_method = <STDIN>;
+chomp $mgr_method;
+
+die "invalid method\n" unless my $method = $method{ $mgr_method };
+
+my $signature = $method->signature;
+
+my %arg;
+for my $key (keys %$signature) {
+  print "$key> ";
+  my $value = <STDIN>;
+  chomp $value;
+  $arg{ $key } = $value;
+}
+
+my $rv = $mgr->$mgr_method(\%arg);
+
+print $JSON->encode( ppack($rv) );
