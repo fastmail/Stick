@@ -21,9 +21,9 @@ sub jdiag { diag(jenc($_[0]))    }
 
   jdiag($file);
 
-  jdiag( $file->data_mgr->size );
+  jdiag($file->data_mgr->size);
 
-  jdiag( $file->data_mgr->size_plus({ plus => 1_000 }) );
+  jdiag($file->data_mgr->size_plus({ plus => 1_000 }));
 }
 
 {
@@ -37,9 +37,9 @@ sub jdiag { diag(jenc($_[0]))    }
 
   jdiag($dir);
 
-  jdiag( $dir->file_mgr->contents );
+  jdiag($dir->file_mgr->contents);
 
-  jdiag( $dir->file_mgr->tree );
+  jdiag($dir->file_mgr->tree);
 }
 
 {
