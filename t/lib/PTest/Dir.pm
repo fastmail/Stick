@@ -1,7 +1,12 @@
 package PTest::Dir;
 use Moose;
+use Moose::Util::TypeConstraints;
 
-use Prism::Entity::Bool qw(true false);
+use Prism::Util -all;
+
+coerce obj( __PACKAGE__ ),
+  from 'Str',
+  via { __PACKAGE__->new({ dirname => $_ }) };
 
 has dirname => (
   is  => 'ro',

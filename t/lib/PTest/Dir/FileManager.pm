@@ -1,6 +1,7 @@
 package PTest::Dir::FileManager;
 use Prism::Publisher;
 
+use Prism::Util -all;
 use Moose::Util::TypeConstraints;
 
 with 'Role::Subsystem' => {
@@ -44,6 +45,17 @@ publish tree => {} => sub {
   }
 
   return \@entities;
+};
+
+publish contains => { file => obj('PTest::File') } => sub {
+  my ($self, $arg) = @_;
+
+  my @files = grep { $_->isa('PTest::File') } @{ $self->contents };
+
+  my $wanted_name = $arg->{file}->filename;
+  my $contains = grep { $_->filename eq $wanted_name } @files;
+
+  return $contains ? true : false;
 };
 
 1;
