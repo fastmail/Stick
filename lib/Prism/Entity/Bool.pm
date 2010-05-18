@@ -1,4 +1,4 @@
-package Prism::Entity::Bool;
+package Stick::Entity::Bool;
 use Moose;
 
 has is_true => (is => 'ro', isa => 'Bool', required => 1);
@@ -10,7 +10,7 @@ sub false { $FALSE }
 
 sub TO_JSON { $_[0]->is_true ? \1 : \0 }
 
-sub PRISM_ATOM { 1 }
+sub PRISM_PACK { $_[0] }
 
 use overload
   bool => 'is_true',

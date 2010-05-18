@@ -7,7 +7,7 @@ use Data::Dumper;
 use JSON 2;
 use PTest::File;
 use PTest::Dir;
-use Prism::Util -all;
+use Stick::Util -all;
 use Try::Tiny;
 
 my $JSON = JSON->new->ascii->pretty->convert_blessed->allow_blessed;
@@ -58,7 +58,7 @@ SUBSYSTEM: while (1) {
 }
 
 my %method = map  { $_->name => $_ }
-             grep { $_->isa('Prism::Publisher::PublishedMethod') }
+             grep { $_->isa('Stick::Publisher::PublishedMethod') }
              $mgr->meta->get_all_methods;
 
 my ($mgr_method, $method);

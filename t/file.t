@@ -5,7 +5,7 @@ use Test::More;
 use lib 't/lib';
 
 use JSON 2;
-use Prism::Util -all;
+use Stick::Util -all;
 use PTest::Dir;
 use PTest::File;
 use Scalar::Util qw(blessed);
@@ -23,7 +23,7 @@ sub jdiag { diag(jenc($_[0]))    }
 
   jdiag($file->data_mgr->size);
 
-  jdiag($file->data_mgr->size_plus({ plus => 1_000 }));
+  jdiag($file->data_mgr->size_plus(undef, { plus => 1_000 }));
 }
 
 {
@@ -44,14 +44,14 @@ sub jdiag { diag(jenc($_[0]))    }
 
 {
   my $rv = PTest::Dir->new({ dirname => 't' })->file_mgr
-                     ->contains({ file => 't/file.t' });
+                     ->contains(undef, { file => 't/file.t' });
 
   jdiag($rv);
 }
 
 {
   my $rv = PTest::Dir->new({ dirname => 't' })->file_mgr
-                     ->contains({ file => 't/doot.t' });
+                     ->contains(undef, { file => 't/doot.t' });
 
   jdiag($rv);
 }

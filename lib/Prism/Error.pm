@@ -1,4 +1,4 @@
-package Prism::Error;
+package Stick::Error;
 use Moose;
 extends 'Throwable::Error';
 

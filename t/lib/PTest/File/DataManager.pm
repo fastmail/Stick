@@ -1,5 +1,5 @@
 package PTest::File::DataManager;
-use Prism::Publisher;
+use Stick::Publisher;
 
 use MooseX::Types::Moose qw(Int);
 use Moose::Util::TypeConstraints;

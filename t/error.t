@@ -5,15 +5,15 @@ use Test::More;
 use lib 't/lib';
 
 use JSON 2;
-use Prism::Util qw(ppack);
-use Prism::Error;
+use Stick::Util qw(ppack);
+use Stick::Error;
 
 my $JSON = JSON->new->ascii(1)->convert_blessed(1)->allow_blessed(1);
 
 sub jdiag { diag($JSON->encode($_[0])) }
 
 {
-  my $error = Prism::Error->new({
+  my $error = Stick::Error->new({
     ident   => 'event prohibits travel',
     message => 'cannot travel from %{src}s to %{dest}s during %{event}s',
     data    => {
@@ -33,7 +33,7 @@ sub jdiag { diag($JSON->encode($_[0])) }
 }
 
 {
-  my $error = Prism::Error->new({
+  my $error = Stick::Error->new({
     public  => 1,
     ident   => 'event prohibits travel',
     message => 'cannot travel from %{src}s to %{dest}s during %{event}s',

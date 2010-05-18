@@ -1,8 +1,8 @@
-package Prism::Publisher;
+package Stick::Publisher;
 use Moose ();
 use Moose::Exporter;
 
-use Prism::Error;
+use Stick::Error;
 
 Moose::Exporter->setup_import_methods(
   with_caller => [ qw(publish) ],
@@ -12,7 +12,7 @@ Moose::Exporter->setup_import_methods(
 # sub init_meta { }
 
 {
-  package Prism::Publisher::PublishedMethod;
+  package Stick::Publisher::PublishedMethod;
   use Moose;
   extends 'Moose::Meta::Method';
 
@@ -30,7 +30,7 @@ Moose::Exporter->setup_import_methods(
 
     return sub {
       my ($self, $ctx, $orig_input) = @_;
-      # confess 'no context provided' unless $ctx->isa('Prism::Context');
+      # confess 'no context provided' unless $ctx->isa('Stick::Context');
 
       my %unknown = map {; $_ => 1 } keys %$orig_input;
       my %error;
@@ -65,7 +65,7 @@ Moose::Exporter->setup_import_methods(
       $error{$_} = 'unknown' for keys %unknown;
 
       if (keys %error) {
-        Prism::Error->throw({
+        Stick::Error->throw({
           ident   => 'invalid method call',
           message => 'invalid arguments to method %{method}s',
           public  => 1,
@@ -94,7 +94,7 @@ sub publish {
   my ($caller, $name, $sig, $code) = @_;
   my $class  = Moose::Meta::Class->initialize($caller);
 
-  my $method = Prism::Publisher::PublishedMethod->wrap(
+  my $method = Stick::Publisher::PublishedMethod->wrap(
     body => $code,
     name => $name,
     signature    => $sig,

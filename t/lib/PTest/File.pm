@@ -2,7 +2,7 @@ package PTest::File;
 use Moose;
 use Moose::Util::TypeConstraints;
 
-use Prism::Util -all;
+use Stick::Util -all;
 
 coerce obj( __PACKAGE__ ),
   from 'Str',

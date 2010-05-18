@@ -1,7 +1,7 @@
 package PTest::Dir::FileManager;
-use Prism::Publisher;
+use Stick::Publisher;
 
-use Prism::Util -all;
+use Stick::Util -all;
 use Moose::Util::TypeConstraints;
 
 with 'Role::Subsystem' => {
