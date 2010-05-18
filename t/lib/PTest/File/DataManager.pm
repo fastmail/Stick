@@ -19,7 +19,7 @@ with 'Role::Subsystem' => {
 publish size => { } => sub { -s $_[0]->filename };
 
 publish size_plus => { plus => Int } => sub {
-  my ($self, $arg) = @_;
+  my ($self, $ctx, $arg) = @_;
   my $plus = $arg->{plus};
 
   $plus + -s $self->filename;

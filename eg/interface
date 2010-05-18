@@ -83,7 +83,7 @@ my $rv;
 my $error;
 
 try {
-  $rv = $mgr->$mgr_method(\%arg);
+  $rv = $mgr->$mgr_method(undef, \%arg);
 } catch {
   $rv = $_;
   $error = 1;

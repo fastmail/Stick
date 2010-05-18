@@ -29,7 +29,7 @@ Moose::Exporter->setup_import_methods(
     my $body = $arg->{body};
 
     return sub {
-      my ($self, $orig_input, $ctx) = @_;
+      my ($self, $ctx, $orig_input) = @_;
       # confess 'no context provided' unless $ctx->isa('Prism::Context');
 
       my %unknown = map {; $_ => 1 } keys %$orig_input;
@@ -75,7 +75,7 @@ Moose::Exporter->setup_import_methods(
           },
         });
       } else {
-        return $self->$body(\%input, $ctx);
+        return $self->$body($ctx, \%input);
       }
     }
   }
