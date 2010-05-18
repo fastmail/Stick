@@ -2,23 +2,14 @@ package Prism::Publisher;
 use Moose ();
 use Moose::Exporter;
 
+use Prism::Error;
+
 Moose::Exporter->setup_import_methods(
   with_caller => [ qw(publish) ],
   also        => 'Moose',
 );
 
-sub init_meta {
-  my ($class, %args) = @_;
-
-  my $for = $args{for_class};
-
-  Moose->init_meta(for_class => $for);
-
-  # Moose::Util::MetaRole::apply_metaclass_roles(
-  #   for_class                => $for,
-  #   metaclass_roles          => [ 'Prism::Meta::Trait::Class::Publisher' ],
-  # );
-}
+# sub init_meta { }
 
 {
   package Prism::Publisher::PublishedMethod;
@@ -41,19 +32,49 @@ sub init_meta {
       my ($self, $orig_input, $ctx) = @_;
       # confess 'no context provided' unless $ctx->isa('Prism::Context');
 
-      my $new_input = {};
+      my %unknown = map {; $_ => 1 } keys %$orig_input;
+      my %error;
+      my %input;
+
       for my $key (keys %$sig) {
-        next unless exists $orig_input->{ $key };
-        my $type = $sig->{ $key };
+        delete $unknown{ $key };
+        my $value = $orig_input->{$key};
+        my $type  = $sig->{ $key };
+
+        if (! defined $value) {
+          if ($type->is_subtype_of('Maybe')) {
+            $input{ $key } = undef;
+          } else {
+            $error{ $key } = 'missing';
+          }
+          next;
+        }
 
         if ($type->check( $orig_input->{ $key } )) {
-          $new_input->{ $key } = $orig_input->{ $key };
+          $input{ $key } = $orig_input->{ $key };
         } else {
-          $new_input->{ $key } = $type->coerce($orig_input->{ $key });
+          my $new_value = eval { $type->coerce($orig_input->{ $key }); };
+          if (defined $new_value) {
+            $input{ $key } = $new_value;
+          } else {
+            $error{ $key } = 'invalid';
+          }
         }
       }
 
-      $self->$body($new_input, $ctx);
+      if (keys %error) {
+        Prism::Error->throw({
+          ident   => 'invalid method call',
+          message => 'invalid arguments to method %{method}s',
+          public  => 1,
+          data    => {
+            method => $arg->{name},
+            errors => \%error,
+          },
+        });
+      } else {
+        return $self->$body(\%input, $ctx);
+      }
     }
   }
 

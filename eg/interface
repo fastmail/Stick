@@ -8,6 +8,7 @@ use JSON 2;
 use PTest::File;
 use PTest::Dir;
 use Prism::Util -all;
+use Try::Tiny;
 
 my $JSON = JSON->new->ascii->pretty->convert_blessed->allow_blessed;
 
@@ -53,7 +54,7 @@ SUBSYSTEM: while (1) {
     last SUBSYSTEM;
   }
 
-  warn "ERRRO: invalid subsytem\n\n"
+  warn "ERROR: invalid subsytem\n\n"
 }
 
 my %method = map  { $_->name => $_ }
@@ -78,7 +79,15 @@ for my $key (keys %$signature) {
   $arg{ $key } = getline;
 }
 
-my $rv = $mgr->$mgr_method(\%arg);
+my $rv;
+my $error;
+
+try {
+  $rv = $mgr->$mgr_method(\%arg);
+} catch {
+  $rv = $_;
+  $error = 1;
+};
 
 my $pack = ppack($rv);
 print "=== result: Raw Perl ======\n";

@@ -22,7 +22,7 @@ publish size_plus => { plus => Int } => sub {
   my ($self, $arg) = @_;
   my $plus = $arg->{plus};
 
-  $plus + -s $_[0]->filename;
+  $plus + -s $self->filename;
 };
 
 1;
