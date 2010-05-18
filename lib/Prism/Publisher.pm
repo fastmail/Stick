@@ -62,6 +62,8 @@ Moose::Exporter->setup_import_methods(
         }
       }
 
+      $error{$_} = 'unknown' for keys %unknown;
+
       if (keys %error) {
         Prism::Error->throw({
           ident   => 'invalid method call',
