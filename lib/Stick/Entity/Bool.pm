@@ -10,7 +10,7 @@ sub false { $FALSE }
 
 sub TO_JSON { $_[0]->is_true ? \1 : \0 }
 
-sub PRISM_PACK { $_[0] }
+sub STICK_PACK { $_[0] }
 
 use overload
   bool => 'is_true',

@@ -29,7 +29,7 @@ has data => (is => 'ro', isa => 'HashRef', default => sub { {} });
 
 sub type { 'error' };
 
-sub PRISM_PACK {
+sub STICK_PACK {
   my ($self) = @_;
 
   if ($self->public) {

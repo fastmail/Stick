@@ -56,4 +56,5 @@ sub jdiag { diag(jenc($_[0]))    }
   jdiag($rv);
 }
 
+ok(1);
 done_testing;

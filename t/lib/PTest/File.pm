@@ -19,7 +19,7 @@ sub data_mgr {
   PTest::File::DataManager->for_file($_[0]);
 }
 
-sub PRISM_PACK {
+sub STICK_PACK {
   my ($self) = @_;
   return {
     filename => $self->filename,

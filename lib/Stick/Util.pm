@@ -27,7 +27,7 @@ sub _ppack_recursive {
   return $value unless ref($value);
 
   if (Scalar::Util::blessed($value)) {
-    return $value->PRISM_PACK if $value->can('PRISM_PACK');
+    return $value->STICK_PACK if $value->can('STICK_PACK');
     die "no route to ppack $value";
   }
 

@@ -7,8 +7,8 @@ has reason => (
   default => 'no action required',
 );
 
-sub PRISM_PACK {
-  return { type => 'prism.nop' };
+sub STICK_PACK {
+  return { type => 'stick.nop' };
 }
 
 1;

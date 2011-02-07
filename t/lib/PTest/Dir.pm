@@ -19,7 +19,7 @@ sub file_mgr {
   PTest::Dir::FileManager->for_dir($_[0]);
 }
 
-sub PRISM_PACK {
+sub STICK_PACK {
   my ($self) = @_;
   return {
     dirname => $self->dirname,
