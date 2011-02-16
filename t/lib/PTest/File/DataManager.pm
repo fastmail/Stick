@@ -1,8 +1,11 @@
 package PTest::File::DataManager;
-use Stick::Publisher;
 
 use MooseX::Types::Moose qw(Int);
 use Moose::Util::TypeConstraints;
+use Moose;
+
+use Stick::Publisher 0.20110216;
+use namespace::autoclean;
 
 with 'Role::Subsystem' => {
   what      => 'file',

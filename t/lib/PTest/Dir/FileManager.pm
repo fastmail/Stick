@@ -1,8 +1,10 @@
 package PTest::Dir::FileManager;
-use Stick::Publisher;
 
 use Stick::Util -all;
+use Moose;
 use Moose::Util::TypeConstraints;
+use Stick::Publisher 0.20110216;
+use namespace::autoclean;
 
 with 'Role::Subsystem' => {
   what      => 'dir',
@@ -58,4 +60,5 @@ publish contains => { file => obj('PTest::File') } => sub {
   return $contains ? true : false;
 };
 
+no Moose;
 1;

@@ -3,18 +3,40 @@ use Moose ();
 use Moose::Exporter;
 
 use Stick::Error;
+our $VERSION = 0.20110216;
 
 Moose::Exporter->setup_import_methods(
   with_caller => [ qw(publish) ],
-  also        => 'Moose',
+  class_metaroles => { class => [qw(Stick::Publisher::Role::CanQueryPublished)] },
 );
 
-# sub init_meta { }
-
 {
+  {
+    package Stick::Publisher::Role::IsPublished;
+    use Moose::Role;
+
+    # Trivial
+  }
+
+  { package Stick::Publisher::Role::CanQueryPublished;
+    use Moose::Role;
+
+    sub get_all_published_methods {
+      my ($meta) = @_;
+      return grep { $_->can('is_published') } $meta->get_all_methods;
+    }
+
+    sub get_all_published_method_names {
+      my ($meta) = @_;
+      return map { $_->name } $meta->get_all_published_methods;
+    }
+  }
+
   package Stick::Publisher::PublishedMethod;
   use Moose;
   extends 'Moose::Meta::Method';
+
+  sub is_published { 1 }
 
   has signature => (
     is  => 'ro',
