@@ -49,9 +49,10 @@ Moose::Exporter->setup_import_methods(
     required => 1,
   );
 
-  has method => (
+  has http_method => (
     is  => 'ro',
     isa => 'Str', # HTTP: get, post, put, delete; type this -- rjbs, 2011-02-22
+    init_arg => 'method',
     required => 1,
     default  => 'get', # not really thrilled by a default -- rjbs, 2011-02-22
   );
