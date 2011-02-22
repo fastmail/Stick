@@ -6,35 +6,40 @@ use Stick::Error;
 our $VERSION = 0.20110216;
 
 Moose::Exporter->setup_import_methods(
-  with_caller => [ qw(publish) ],
-  class_metaroles => { class => [qw(Stick::Publisher::Role::CanQueryPublished)] },
+  with_caller     => [ qw(publish) ],
+  class_metaroles => {
+    class => [ qw(Stick::Publisher::Role::CanQueryPublished) ],
+  },
 );
 
 {
-  {
-    package Stick::Publisher::Role::IsPublished;
-    use Moose::Role;
+  package Stick::Publisher::Role::CanQueryPublished;
+  use Moose::Role;
 
-    # Trivial
+  sub get_all_published_methods {
+    my ($meta) = @_;
+    return grep { $_->can('is_published') && $_->is_published }
+           $meta->get_all_methods;
   }
 
-  { package Stick::Publisher::Role::CanQueryPublished;
-    use Moose::Role;
-
-    sub get_all_published_methods {
-      my ($meta) = @_;
-      return grep { $_->can('is_published') } $meta->get_all_methods;
-    }
-
-    sub get_all_published_method_names {
-      my ($meta) = @_;
-      return map { $_->name } $meta->get_all_published_methods;
-    }
+  sub get_all_published_method_names {
+    my ($meta) = @_;
+    return map { $_->name } $meta->get_all_published_methods;
   }
 
+  sub methods_published_under_path {
+    my ($meta, $path) = @_;
+
+    return grep { $_->path eq $path } $meta->get_all_published_methods;
+  }
+}
+
+{
   package Stick::Publisher::PublishedMethod;
   use Moose;
   extends 'Moose::Meta::Method';
+
+  use MooseX::StrictConstructor;
 
   sub is_published { 1 }
 
@@ -42,6 +47,20 @@ Moose::Exporter->setup_import_methods(
     is  => 'ro',
     isa => 'HashRef',
     required => 1,
+  );
+
+  has method => (
+    is  => 'ro',
+    isa => 'Str', # HTTP: get, post, put, delete; type this -- rjbs, 2011-02-22
+    required => 1,
+    default  => 'get', # not really thrilled by a default -- rjbs, 2011-02-22
+  );
+
+  has path => (
+    is  => 'ro',
+    isa => 'Str', # consider typing this more strongly, too -- rjbs, 2011-02-22
+    lazy    => 1,
+    default => sub { $_[0]->name },
   );
 
   sub _sig_wrapper {
@@ -113,10 +132,24 @@ Moose::Exporter->setup_import_methods(
 }
 
 sub publish {
-  my ($caller, $name, $sig, $code) = @_;
+  my ($caller, $name, $extra, $code) = @_;
   my $class  = Moose::Meta::Class->initialize($caller);
 
+  my $sig = {};
+  my $arg = {};
+
+  for my $orig_key (keys %$extra) {
+    my $key = $orig_key;
+
+    my $is_dash = $key =~ s/^-//;
+    my $target = $is_dash ? $arg : $sig;
+
+    $target->{ $key } = $extra->{ $orig_key };
+  }
+
   my $method = Stick::Publisher::PublishedMethod->wrap(
+    %$arg,
+
     body => $code,
     name => $name,
     signature    => $sig,
