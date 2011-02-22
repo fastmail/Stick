@@ -10,11 +10,13 @@ sub _instance_subroute {
 
   my $meta = $self->meta;
 
-  return unless $meta->can('Stick::Publisher::Role::CanQueryPublished');
+  return unless Moose::Util::does_role($meta, 'Stick::Publisher::Role::CanQueryPublished');
 
   my $next = $path->[0];
 
   return unless my @methods = $meta->methods_published_under_path($next);
+
+  shift @$path;
 
   my %map = map {; $_->http_method . '_method' => $_ } @methods;
 
