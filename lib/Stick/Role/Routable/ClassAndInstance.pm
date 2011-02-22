@@ -1,4 +1,4 @@
-package Stick::Role::Routable::Disjunct;
+package Stick::Role::Routable::ClassAndInstance;
 use Moose::Role;
 
 with(
