@@ -27,7 +27,26 @@ sub flatpack {
 subtest "simple file that exists" => sub {
   my $file = PTest::File->new({ filename => 't/file.t' });
 
+  my @methods = $file->meta->get_all_published_method_names;
+  is_deeply(
+    \@methods,
+    [ qw(class) ],
+    "file only publishes one method",
+  );
+
   isa_ok($file, 'PTest::File');
+
+  is(
+    $file->class,
+    'PTest::File',
+    "the class method works via normal invocation",
+  );
+
+  is(
+    flatpack($file->class),
+    'PTest::File',
+    "the class method works via packed round trip",
+  );
 
   cmp_deeply(
     flatpack($file),

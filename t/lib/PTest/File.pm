@@ -2,6 +2,8 @@ package PTest::File;
 use Moose;
 use Moose::Util::TypeConstraints;
 
+with 'PTest::Role::PublishedClass';
+
 use Stick::Util -all;
 
 coerce obj( __PACKAGE__ ),
