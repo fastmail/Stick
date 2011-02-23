@@ -50,7 +50,7 @@ publish tree => {} => sub {
 };
 
 publish contains => { file => obj('PTest::File') } => sub {
-  my ($self, $ctx, $arg) = @_;
+  my ($self, $arg) = @_;
 
   my @files = grep { $_->isa('PTest::File') } @{ $self->contents };
 

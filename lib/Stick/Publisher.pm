@@ -56,8 +56,7 @@ Moose::Exporter->setup_import_methods(
     my $body = $arg->{body};
 
     return sub {
-      my ($self, $ctx, $orig_input) = @_;
-      # confess 'no context provided' unless $ctx->isa('Stick::Context');
+      my ($self, $orig_input) = @_;
 
       my %unknown = map {; $_ => 1 } keys %$orig_input;
       my %error;
@@ -102,7 +101,7 @@ Moose::Exporter->setup_import_methods(
           },
         });
       } else {
-        return $self->$body($ctx, \%input);
+        return $self->$body(\%input);
       }
     }
   }
