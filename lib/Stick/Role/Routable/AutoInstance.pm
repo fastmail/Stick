@@ -10,7 +10,7 @@ sub _instance_subroute {
 
   my $meta = $self->meta;
 
-  return unless Moose::Util::does_role($meta, 'Stick::Publisher::Role::CanQueryPublished');
+  return unless Moose::Util::does_role($meta, 'Stick::Trait::Class::CanQueryPublished');
 
   my $next = $path->[0];
 

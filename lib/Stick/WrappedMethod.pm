@@ -15,9 +15,11 @@ has invocant => (
 
 my @methods = qw(get put post delete);
 
+require Moose::Meta::Method;
+
 has [ map {; "$_\_method" } @methods ] => (
   is  => 'ro',
-  isa => 'Str|CodeRef',
+  isa => 'Moose::Meta::Method',
 );
 
 for my $method (@methods) {
@@ -28,7 +30,7 @@ for my $method (@methods) {
       my $proxy_name   = "$method\_method";
       Moonpig::X->throw("bad method")
         unless my $proxy_method = $self->$proxy_name;
-      return $self->invocant->$proxy_method($arg);
+      return $proxy_method->($self->invocant, $arg);
     },
   });
 }
