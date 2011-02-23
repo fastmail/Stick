@@ -8,11 +8,18 @@ use JSON 2;
 use Stick::Util qw(ppack);
 use Stick::Error;
 
+use Test::Deep qw(cmp_deeply superhashof);
+
 my $JSON = JSON->new->ascii(1)->convert_blessed(1)->allow_blessed(1);
 
-sub jdiag { diag($JSON->encode($_[0])) }
+sub flatpack {
+  my ($entity) = @_;
 
-{
+  my $flat = $JSON->decode( $JSON->encode( ppack( $entity ) ) );
+  return $flat->{value};
+}
+
+subtest "private error" => sub {
   my $error = Stick::Error->new({
     ident   => 'event prohibits travel',
     message => 'cannot travel from %{src}s to %{dest}s during %{event}s',
@@ -29,10 +36,17 @@ sub jdiag { diag($JSON->encode($_[0])) }
     'error message is formatted on demand',
   );
 
-  jdiag( ppack( $error ));
-}
+  cmp_deeply(
+    flatpack($error),
+    superhashof({
+      ident   => 'internal error',
+      message => 'an internal error occurred',
+      data    => { },
+    }),
+  );
+};
 
-{
+subtest "public error" => sub {
   my $error = Stick::Error->new({
     public  => 1,
     ident   => 'event prohibits travel',
@@ -50,7 +64,18 @@ sub jdiag { diag($JSON->encode($_[0])) }
     'error message is formatted on demand',
   );
 
-  jdiag( ppack( $error ));
-}
+  cmp_deeply(
+    flatpack($error),
+    superhashof({
+      ident   => 'event prohibits travel',
+      message => 'cannot travel from %{src}s to %{dest}s during %{event}s',
+      data    => {
+        src    => 'London',
+        dest   => 'New York',
+        event  => 'volcanic eruption',
+      }
+    }),
+  );
+};
 
 done_testing;
