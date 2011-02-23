@@ -5,34 +5,19 @@ use Moose::Exporter;
 use Stick::Error;
 our $VERSION = 0.20110216;
 
+require Stick::Trait::Class::CanQueryPublished;
+
 Moose::Exporter->setup_import_methods(
   with_caller     => [ qw(publish) ],
   class_metaroles => {
-    class => [ qw(Stick::Publisher::Role::CanQueryPublished) ],
+    class => [ qw(Stick::Trait::Class::CanQueryPublished) ],
+  },
+  role_metaroles => {
+    # role                 => [ 'Stick::Trait::Role'], # needed?
+    application_to_class => [ 'Stick::Trait::Application::ToClass' ],
+    application_to_role  => [ 'Stick::Trait::Application::ToRole'  ],
   },
 );
-
-{
-  package Stick::Publisher::Role::CanQueryPublished;
-  use Moose::Role;
-
-  sub get_all_published_methods {
-    my ($meta) = @_;
-    return grep { $_->can('is_published') && $_->is_published }
-           $meta->get_all_methods;
-  }
-
-  sub get_all_published_method_names {
-    my ($meta) = @_;
-    return map { $_->name } $meta->get_all_published_methods;
-  }
-
-  sub methods_published_under_path {
-    my ($meta, $path) = @_;
-
-    return grep { $_->path eq $path } $meta->get_all_published_methods;
-  }
-}
 
 {
   package Stick::Publisher::PublishedMethod;
