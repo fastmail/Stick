@@ -16,7 +16,7 @@ around apply => sub {
       for            => $role2,
       role_metaroles => {
         application_to_class => [ 'Stick::Trait::Application::ToClass' ],
-        application_to_role => [ 'Stick::Trait::Application::ToRole' ],
+        application_to_role  => [ 'Stick::Trait::Application::ToRole' ],
       },
     );
 

@@ -13,7 +13,7 @@ Moose::Exporter->setup_import_methods(
     class => [ qw(Stick::Trait::Class::CanQueryPublished) ],
   },
   role_metaroles => {
-    # role                 => [ 'Stick::Trait::Role'], # needed?
+    role                 => [ 'Stick::Trait::Role'],
     application_to_class => [ 'Stick::Trait::Application::ToClass' ],
     application_to_role  => [ 'Stick::Trait::Application::ToRole'  ],
   },

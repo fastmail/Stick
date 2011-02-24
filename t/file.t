@@ -64,6 +64,20 @@ subtest "simple file that exists" => sub {
     (-s 't/file.t') + 1_000,
     'gets the right size_plus',
   );
+
+  my $resource = $file->route([ 'class' ]);
+
+  is(
+    $resource->resource_request('get'),
+    'PTest::File',
+    "the class method works via routed invocation",
+  );
+
+  is(
+    flatpack( $resource->resource_request('get') ),
+    'PTest::File',
+    "the class method works via routed invocation and packed round trip",
+  );
 };
 
 subtest "simple file that doesn't exist" => sub {

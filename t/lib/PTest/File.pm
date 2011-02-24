@@ -2,7 +2,11 @@ package PTest::File;
 use Moose;
 use Moose::Util::TypeConstraints;
 
-with 'PTest::Role::PublishedClass';
+with(
+  'PTest::Role::PublishedClass',             # gets us the published
+  'Stick::Role::Routable::ClassAndInstance', # for two sets of routes
+  'Stick::Role::Routable::AutoInstance',
+);
 
 use Stick::Util -all;
 
@@ -28,5 +32,7 @@ sub STICK_PACK {
     exists   => (-e $self->filename ? true : false),
   }
 }
+
+sub _class_subroute { }
 
 1;
