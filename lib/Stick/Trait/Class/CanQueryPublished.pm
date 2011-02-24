@@ -18,4 +18,21 @@ sub methods_published_under_path {
   return grep { $_->path eq $path } $meta->get_all_published_methods;
 }
 
+sub get_all_published_attributes {
+  my ($meta) = @_;
+  return grep { $_->can('publish_is') } $meta->get_all_attributes;
+}
+
+sub attribute_published_under_path {
+  my ($meta, $path) = @_;
+
+  my @attr = grep { $_->publish_as eq $path }
+             $meta->get_all_published_attributes;
+
+  return unless @attr;
+  return $attr[0] if @attr == 1;
+
+  confess "bizarrely found multiple attributes with same published name $path";
+}
+
 1;
