@@ -14,7 +14,9 @@ has publish_as => (
 
 has publish_is => (
   is  => 'ro',
-  isa => enum([ qw(ro rw) ]),
+
+  # XXX: Eventually we can have "rw" for PUT setters -- rjbs, 2011-02-25
+  isa => enum([ qw(ro ro) ]),
 );
 
 1;

@@ -10,6 +10,11 @@ with(
 
 use namespace::autoclean;
 
+has not_pub => (
+  is => 'rw',
+  default => 123,
+);
+
 has pub_ro => (
   is => 'rw',
   required   => 1,

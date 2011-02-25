@@ -20,7 +20,9 @@ sub methods_published_under_path {
 
 sub get_all_published_attributes {
   my ($meta) = @_;
-  return grep { $_->can('publish_is') } $meta->get_all_attributes;
+
+  return grep { $_->can('publish_is') and defined $_->publish_is }
+         $meta->get_all_attributes;
 }
 
 sub attribute_published_under_path {
