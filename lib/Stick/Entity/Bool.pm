@@ -13,7 +13,7 @@ sub TO_JSON { $_[0]->is_true ? \1 : \0 }
 sub STICK_PACK { $_[0] }
 
 use overload
-  bool => 'is_true',
+  bool => sub { $_[0]->is_true },
   '""' => sub { $_[0]->is_true ? 'TRUE' : 'FALSE' },
   '==' => sub { not($_[0] xor $_[1]) }; # Crazy?  -- rjbs, 2010-05-16
 
