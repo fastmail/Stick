@@ -33,7 +33,8 @@ sub _ppack_recursive {
 
   return [ map {; _ppack_recursive($_) } @$value ] if _ARRAY0($value);
 
-  return { map {; $_ => _ppack_recursive($_) } keys %$value } if _HASH0($value);
+  return { map {; $_ => _ppack_recursive($value->{$_}) } keys %$value }
+    if _HASH0($value);
 
   die "no route to ppack $value";
 }
