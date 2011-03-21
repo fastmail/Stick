@@ -3,12 +3,12 @@ use Moose ();
 use Moose::Exporter;
 
 use Stick::Error;
-our $VERSION = 0.20110216;
+our $VERSION = 0.20110321;
 
 require Stick::Trait::Class::CanQueryPublished;
 
 Moose::Exporter->setup_import_methods(
-  with_caller     => [ qw(publish) ],
+  with_meta     => [ qw(publish) ],
   class_metaroles => {
     class     => [ qw(Stick::Trait::Class::CanQueryPublished) ],
     attribute => [ qw(Stick::Trait::Attribute::Publishable) ],
@@ -120,7 +120,15 @@ Moose::Exporter->setup_import_methods(
 
 sub publish {
   my ($caller, $name, $extra, $code) = @_;
-  my $class  = Moose::Meta::Class->initialize($caller);
+
+  # This appalling hocus-pocus is required to get 'publish' to work
+  # inside of parameterized roles; otherwise the package we install
+  # into is the parameterizable role, not the generated parameterized
+  # role. MJD 2011-03-21
+  require MooseX::Role::Parameterized;
+  $caller = MooseX::Role::Parameterized->current_metaclass || $caller;
+
+  my $package = $caller->name;
 
   my $sig = {};
   my $arg = {};
@@ -140,10 +148,10 @@ sub publish {
     body => $code,
     name => $name,
     signature    => $sig,
-    package_name => $caller,
+    package_name => $package,
   );
 
-  $class->add_method($name => $method);
+  $caller->add_method($name => $method);
 }
 
 1;
