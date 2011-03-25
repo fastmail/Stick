@@ -1,6 +1,6 @@
 package PTest::Role::PublishedClass;
 use Moose::Role;
-use Stick::Publisher;
+use Stick::Publisher::Publish;
 
 publish class => {} => sub {
   my ($self) = @_;

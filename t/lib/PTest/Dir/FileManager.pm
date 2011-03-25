@@ -3,7 +3,8 @@ package PTest::Dir::FileManager;
 use Stick::Util -all;
 use Moose;
 use Moose::Util::TypeConstraints;
-use Stick::Publisher 0.20110216;
+use Stick::Publisher 0.20110324;
+use Stick::Publisher::Publish 0.20110324;
 use namespace::autoclean;
 
 with 'Role::Subsystem' => {

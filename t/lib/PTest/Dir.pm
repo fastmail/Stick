@@ -1,6 +1,7 @@
 package PTest::Dir;
 use Moose;
 use Moose::Util::TypeConstraints;
+use Stick::Publisher;
 
 use Stick::Util -all;
 

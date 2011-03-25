@@ -4,7 +4,8 @@ use MooseX::Types::Moose qw(Int);
 use Moose::Util::TypeConstraints;
 use Moose;
 
-use Stick::Publisher 0.20110216;
+use Stick::Publisher 0.20110324;
+use Stick::Publisher::Publish 0.20110324;
 use namespace::autoclean;
 
 with 'Role::Subsystem' => {

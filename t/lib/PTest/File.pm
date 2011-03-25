@@ -1,6 +1,7 @@
 package PTest::File;
 use Moose;
 use Moose::Util::TypeConstraints;
+use Stick::Publisher;
 
 with(
   'PTest::Role::PublishedClass',             # gets us the published

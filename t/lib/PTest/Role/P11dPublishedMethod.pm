@@ -2,11 +2,13 @@ package PTest::Role::P11dPublishedMethod;
 use MooseX::Role::Parameterized;
 
 parameter 'slogan';
+use Stick::Publisher::Publish 0.20110324;
 
 role {
-  my ($p) = @_;
+  my ($p, %args) = @_;
   require Stick::Publisher;
-  Stick::Publisher->import();
+  Stick::Publisher->VERSION(0.20110324);
+  Stick::Publisher->import({ into => $args{operating_on}->name });
   sub publish;
   my $slogan = $p->slogan;
 
