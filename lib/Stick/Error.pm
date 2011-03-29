@@ -2,6 +2,11 @@ package Stick::Error;
 use Moose;
 extends 'Throwable::Error';
 
+with('MooseX::OneArgNew' => {
+  type => 'Str',
+  init_arg => 'ident',
+});
+
 use String::Formatter named_stringf => {
   -as   => '__stringf',
   codes => { s => sub { $_ } },
@@ -14,7 +19,8 @@ has ident  => (is => 'ro', isa => 'Str', required => 1);
 has message_fmt => (
   is  => 'ro',
   isa => 'Str',
-  required => 1,
+  lazy => 1,
+  default => sub { $_[0]->ident },
   init_arg => 'message',
 );
 

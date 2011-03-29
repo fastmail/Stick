@@ -78,4 +78,12 @@ subtest "public error" => sub {
   );
 };
 
+subtest "one-arg new" => sub {
+  my $MSG = "with your mouth";
+  my $error = Stick::Error->new($MSG);
+  is($error->message, $MSG, "message");
+  is($error->ident, $MSG, "ident");
+  ok(! $error->public);
+};
+
 done_testing;
