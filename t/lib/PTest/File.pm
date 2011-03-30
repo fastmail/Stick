@@ -34,6 +34,6 @@ sub STICK_PACK {
   }
 }
 
-sub _class_subroute { }
+sub _class_subroute { return; }
 
 1;

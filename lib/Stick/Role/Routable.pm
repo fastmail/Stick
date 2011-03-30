@@ -1,6 +1,6 @@
 package Stick::Role::Routable;
 use Moose::Role;
-
+our $VERSION = 0.20110330;
 use HTTP::Throwable::Factory;
 
 use namespace::autoclean;
@@ -30,12 +30,13 @@ sub route {
 
     my $part_count = @remaining_path;
 
-    $next_step = $next_step->_subroute( \@remaining_path );
+    my $ndr_allowed = 0;
+    $next_step = $next_step->_subroute( \@remaining_path, \$ndr_allowed );
 
     HTTP::Throwable::Factory->throw('NotFound') unless $next_step;
 
-    Stick::Error->throw("non-destructive routing not allowed")
-      unless @remaining_path < $part_count;
+    Stick::Error->throw("non-productive routing not allowed")
+      unless @remaining_path < $part_count || $ndr_allowed;
   }
 }
 
