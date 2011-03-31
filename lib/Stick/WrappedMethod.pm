@@ -1,5 +1,6 @@
 package Stick::WrappedMethod;
 use Moose;
+our $VERSION = 0.20110331;
 
 with(
   'Stick::Role::PublicResource',

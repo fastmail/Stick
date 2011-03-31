@@ -1,4 +1,5 @@
 package Stick::Role::Routable::AutoInstance;
+our $VERSION = 0.20110401;
 use Moose::Role;
 
 use Stick::WrappedMethod;
@@ -7,6 +8,11 @@ use namespace::autoclean;
 
 sub _instance_subroute {
   my ($self, $path) = @_;
+
+  if ($self->can('_extra_instance_subroute')) {
+    my $res = $self->_extra_instance_subroute($path);
+    return $res if $res;
+  }
 
   my $meta = $self->meta;
 
