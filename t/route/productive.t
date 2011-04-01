@@ -7,6 +7,7 @@ use Test::Fatal;
 use lib 't/lib';
 
 use PTest::Nonproductive;
+use PTest::NonproductiveEI;
 use Scalar::Util qw(blessed);
 
 subtest "non-productive routing fails" => sub {
@@ -25,5 +26,11 @@ subtest "non-productive routing can be made to succeed" => sub {
   ok(! exception { $test->route(['ok']) });
   ok(  exception { $test->route(['fail']) }, "make sure ndr_ok is not sticky");
 };
+
+subtest "npr option passed to _extra_instance_subroute" => sub {
+  my $test = PTest::NonproductiveEI->new({ productive => 0 });
+  ok(! exception { $test->route(['ok']) });
+};
+
 
 done_testing;
