@@ -1,5 +1,5 @@
 package Stick::Publisher::PublishedMethod;
-use Moose;
+use Moose 1.25;
 extends 'Moose::Meta::Method';
 
 use MooseX::StrictConstructor;
