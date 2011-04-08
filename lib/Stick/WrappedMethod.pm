@@ -29,7 +29,7 @@ for my $method (@methods) {
     code => sub {
       my ($self, $arg) = @_;
       my $proxy_name   = "$method\_method";
-      Moonpig::X->throw("bad method")
+      Moonpig::X->throw("bad http method")
         unless my $proxy_method = $self->$proxy_name;
       return $proxy_method->($self->invocant, $arg);
     },
