@@ -3,7 +3,7 @@ use Moose ();
 use Moose::Exporter;
 
 use Stick::Error;
-our $VERSION = 0.20110324;
+our $VERSION = 0.20110504;
 
 Moose::Exporter->setup_import_methods(
   with_meta     => [ qw(publish) ],
@@ -34,6 +34,7 @@ sub publish {
   }
 
   require Stick::Publisher::PublishedMethod;
+  Stick::Publisher::PublishedMethod->VERSION(0.20110504);
   my $method = Stick::Publisher::PublishedMethod->wrap(
     %$arg,
 
