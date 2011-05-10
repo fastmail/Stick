@@ -18,7 +18,7 @@ sub _instance_subroute {
 
   return unless Moose::Util::does_role($meta, 'Stick::Trait::Class::CanQueryPublished');
 
-  my $next = $path->[0];
+  my $next = $path->[0] || "";
 
   if (my @methods = $meta->methods_published_under_path($next)) {
     shift @$path;
