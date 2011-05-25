@@ -4,8 +4,8 @@ use Test::More;
 
 use lib 't/lib';
 
-use JSON 2;
-use Stick::Util qw(ppack);
+use JSON 2 ();
+use Stick::Util qw(json_pack ppack);
 use Stick::Error;
 
 use Test::Deep qw(cmp_deeply superhashof);
@@ -15,7 +15,7 @@ my $JSON = JSON->new->ascii(1)->convert_blessed(1)->allow_blessed(1);
 sub flatpack {
   my ($entity) = @_;
 
-  my $flat = $JSON->decode( $JSON->encode( ppack( $entity ) ) );
+  my $flat = $JSON->decode( json_pack( $entity ) );
   return $flat->{value};
 }
 

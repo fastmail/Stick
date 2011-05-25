@@ -2,6 +2,7 @@ package Stick::Util;
 use strict;
 use warnings;
 
+use JSON 2 ();
 use Moose::Util::TypeConstraints;
 use Params::Util qw(_ARRAY0 _HASH0);
 use Stick::Entity::Bool;
@@ -18,6 +19,7 @@ use Sub::Exporter -setup => {
     nop    => Sub::Exporter::Util::curry_method,
     is_nop => Sub::Exporter::Util::curry_method('value_is_nop'),
     obj    => Sub::Exporter::Util::curry_method,
+    json_pack => Sub::Exporter::Util::curry_method,
   ],
 };
 
@@ -42,7 +44,15 @@ sub _ppack_recursive {
 sub ppack {
   my ($self, $value) = @_;
 
-  return { value => _ppack_recursive($value) };
+  _ppack_recursive($value);
+}
+
+my $JSON = JSON->new->ascii(1)->convert_blessed(1)->allow_blessed(1);
+
+sub json_pack {
+  my ($self, $entity) = @_;
+
+  return $JSON->encode({ value => $self->ppack( $entity ) });
 }
 
 sub true  { Stick::Entity::Bool->true  }

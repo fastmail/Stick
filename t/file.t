@@ -20,7 +20,7 @@ sub jdiag { note(jenc($_[0]))    }
 sub flatpack {
   my ($entity) = @_;
 
-  my $flat = $JSON->decode( $JSON->encode( ppack( $entity ) ) );
+  my $flat = $JSON->decode( json_pack( $entity ) );
   return $flat->{value};
 }
 
