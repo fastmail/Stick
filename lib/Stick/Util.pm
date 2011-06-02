@@ -1,6 +1,7 @@
 package Stick::Util;
 use strict;
 use warnings;
+our $VERSION = 0.20110525;
 
 use JSON 2 ();
 use Moose::Util::TypeConstraints;
