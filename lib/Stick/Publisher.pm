@@ -3,7 +3,6 @@ use Moose ();
 use Moose::Exporter;
 
 use Stick::Error;
-our $VERSION = 0.20110324;
 
 require Stick::Trait::Class::CanQueryPublished;
 

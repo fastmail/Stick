@@ -1,5 +1,4 @@
 package Stick::Role::Routable::AutoInstance;
-our $VERSION = 0.20110401;
 use Moose::Role;
 
 use Stick::WrappedMethod;

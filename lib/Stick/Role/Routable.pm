@@ -1,6 +1,5 @@
 package Stick::Role::Routable;
 use Moose::Role;
-our $VERSION = 0.20110330;
 use HTTP::Throwable::Factory;
 
 use namespace::autoclean;

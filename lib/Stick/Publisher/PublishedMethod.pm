@@ -1,7 +1,6 @@
 package Stick::Publisher::PublishedMethod;
 use Moose 1.25;
 extends 'Moose::Meta::Method';
-our $VERSION = 0.20110504;
 
 use MooseX::StrictConstructor;
 
