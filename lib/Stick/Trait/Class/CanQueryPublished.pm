@@ -1,4 +1,7 @@
 package Stick::Trait::Class::CanQueryPublished;
+BEGIN {
+  $Stick::Trait::Class::CanQueryPublished::VERSION = '0.300';
+}
 use Moose::Role;
 
 sub get_all_published_methods {
@@ -38,3 +41,28 @@ sub attribute_published_under_path {
 }
 
 1;
+
+__END__
+=pod
+
+=head1 NAME
+
+Stick::Trait::Class::CanQueryPublished
+
+=head1 VERSION
+
+version 0.300
+
+=head1 AUTHOR
+
+Ricardo Signes <rjbs@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Ricardo Signes.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
