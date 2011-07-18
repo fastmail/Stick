@@ -6,10 +6,10 @@ use Stick::WrappedMethod;
 use namespace::autoclean;
 
 sub _instance_subroute {
-  my ($self, $path, $npr) = @_;
+  my ($self, $path, $ndr) = @_;
 
   if ($self->can('_extra_instance_subroute')) {
-    my $res = $self->_extra_instance_subroute($path, $npr);
+    my $res = $self->_extra_instance_subroute($path, $ndr);
     return $res if $res;
   }
 

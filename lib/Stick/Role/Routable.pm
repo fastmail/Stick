@@ -29,13 +29,15 @@ sub route {
 
     my $part_count = @remaining_path;
 
-    my $ndr_allowed = 0;
-    $next_step = $next_step->_subroute( \@remaining_path, \$ndr_allowed );
+    # non-productive routing -- if set, we don't mind if the remaining path
+    # stays the same length -- rjbs, 2011-07-18
+    my $npr_allowed = 0;
+    $next_step = $next_step->_subroute( \@remaining_path, \$npr_allowed );
 
     HTTP::Throwable::Factory->throw('NotFound') unless $next_step;
 
     Stick::Error->throw("non-productive routing not allowed")
-      unless @remaining_path < $part_count || $ndr_allowed;
+      unless @remaining_path < $part_count || $npr_allowed;
   }
 }
 
