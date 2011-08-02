@@ -66,9 +66,9 @@ parameter factory => (
       default_sort_key => $p->default_sort_key,
     };
 
-    my $c = class([ 'CollectionType',
+    my $c = class([ 'Stick::Role::Collection',
                     $p->item_collection_name, $parameters, ],
-                  map "Collection::$_", @{$p->collection_roles},
+                    @{$p->collection_roles},
                  );
     return $c;
   }

@@ -3,11 +3,12 @@ use strict;
 use warnings;
 
 use JSON 2 ();
+use Moose::Util qw(apply_all_roles);
 use Moose::Util::TypeConstraints;
 use Params::Util qw(_ARRAY0 _HASH0);
+use Scalar::Util ();
 use Stick::Entity::Bool;
 use Stick::Entity::Nop;
-use Scalar::Util ();
 use Try::Tiny;
 
 use Sub::Exporter::Util ();
@@ -89,9 +90,8 @@ sub class {
     if (ref $name) {
       my ($role_name, $moniker, $params) = @$name;
 
-      my $full_name = _rewrite_prefix($role_name);
-      Class::MOP::load_class($full_name);
-      my $role_object = $full_name->meta->generate_role(
+      Class::MOP::load_class($role_name);
+      my $role_object = $role_name->meta->generate_role(
         parameters => $params,
       );
 
@@ -107,9 +107,7 @@ sub class {
     push @all_names, $name;
   }
 
-  my $name = join q{::}, 'Moonpig::Class', @all_names;
-
-  @role_class_names = _rewrite_prefix(@role_class_names);
+  my $name = join q{::}, 'Stick::Class', @all_names;
 
   Class::MOP::load_class($_) for @role_class_names;
 
