@@ -20,6 +20,7 @@ use Sub::Exporter -setup => {
     is_nop => Sub::Exporter::Util::curry_method('value_is_nop'),
     obj    => Sub::Exporter::Util::curry_method,
     json_pack => Sub::Exporter::Util::curry_method,
+    'class',
   ],
 };
 
@@ -72,6 +73,65 @@ sub obj {
   my ($self, $class) = @_;
 
   $OBJ_TYPE{ $class } ||= class_type($class);
+}
+
+my $SERIAL = "aa";
+sub class {
+  my (@args) = @_;
+  my @orig_args = @args;
+
+  # $role_hash is a hash mapping nonce-names to role objects
+  # $role_names is an array of names of more roles to add
+  my (@roles, @role_class_names, @all_names);
+
+  while (@args) {
+    my $name = shift @args;
+    if (ref $name) {
+      my ($role_name, $moniker, $params) = @$name;
+
+      my $full_name = _rewrite_prefix($role_name);
+      Class::MOP::load_class($full_name);
+      my $role_object = $full_name->meta->generate_role(
+        parameters => $params,
+      );
+
+      push @roles, $role_object;
+      $name = $moniker;
+    } else {
+      push @role_class_names, $name;
+    }
+
+    $name =~ s/::/_/g if @all_names;
+    $name =~ s/^=//;
+
+    push @all_names, $name;
+  }
+
+  my $name = join q{::}, 'Moonpig::Class', @all_names;
+
+  @role_class_names = _rewrite_prefix(@role_class_names);
+
+  Class::MOP::load_class($_) for @role_class_names;
+
+  if ($name->can('meta')) {
+    $name .= "_" . $SERIAL++;
+  }
+  my $class = Moose::Meta::Class->create( $name => (
+    superclasses => [ 'Moose::Object' ],
+  ));
+
+  apply_all_roles($class, @role_class_names, map $_->name, @roles);
+
+  $class = Moose::Util::MetaRole::apply_metaroles(
+    for => $class->name,
+    class_metaroles => {
+      class => [ 'MooseX::StrictConstructor::Trait::Class' ],
+    },
+  );
+
+  $class->make_immutable;
+
+  return $class->name;
 }
 
 1;

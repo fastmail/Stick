@@ -3,9 +3,11 @@ package Stick::Types;
 
 use MooseX::Types -declare => [ qw(
   StickBool
+  Factory
+  PositiveInt
 ) ];
 
-use MooseX::Types::Moose qw(Bool Object);
+use MooseX::Types::Moose qw(Bool Int Object Str);
 
 use Stick::Entity::Bool;
 
@@ -16,5 +18,9 @@ subtype StickBool,
 coerce StickBool,
   from Bool,
   via { my $method = $_ ? 'true' : 'false'; Stick::Entity::Bool->$method };
+
+subtype Factory, as Str | Object;
+
+subtype PositiveInt, as Int, where { $_ > 0 };
 
 1;
