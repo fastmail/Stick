@@ -127,7 +127,7 @@ subtest "simple directory" => sub {
     array_each(
       any(
         { filename => ignore(), exists => ignore() },
-        [ ignore() ], # XXX: EXTREME BOGISTY -- rjbs, 2011-02-23
+        array_each(ignore()), # XXX: EXTREME BOGOSITY -- rjbs, 2011-02-23
       ),
     ),
     "dir->tree packs as expected",
