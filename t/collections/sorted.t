@@ -5,12 +5,6 @@ use Test::More;
 use Test::Fatal;
 use Test::Routine;
 use Test::Routine::Util -all;
-use Moonpig::Env::Test;
-use Moonpig::Util qw(class cents dollars);
-
-with(
-  't::lib::Factory::Ledger',
-);
 
 has ledger => (
   is => 'ro',

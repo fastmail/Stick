@@ -2,13 +2,6 @@ use Test::Routine;
 use Test::Routine::Util -all;
 use Test::More;
 use Test::Fatal;
-use Moonpig::Env::Test;
-use Moonpig::Util qw(class dollars);
-
-with(
-  't::lib::Factory::Ledger',
-  't::lib::Role::UsesStorage',
-);
 
 use namespace::autoclean;
 
@@ -28,7 +21,6 @@ test "route to get a collection" => sub {
   my ($self) = @_;
 
   my $ledger = $self->test_ledger;
-  Moonpig->env->save_ledger($ledger);
 
   my $guid = $ledger->guid;
 
@@ -36,7 +28,6 @@ test "route to get a collection" => sub {
     [ 'ledger', 'guid', $guid, 'refunds' ],
   );
   ok($collection);
-
   is($collection->resource_request(get => {}), $collection,
      "collection is a self-getter");
 };
@@ -45,7 +36,6 @@ test "pages" => sub {
   my ($self) = @_;
 
   my $ledger = $self->test_ledger;
-  Moonpig->env->save_ledger($ledger);
   my @bank;
   for my $i (1..20) {
     my $b = class('Bank')->new({ ledger => $ledger, amount => dollars($i) });

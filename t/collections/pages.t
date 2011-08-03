@@ -5,21 +5,6 @@ use Test::More;
 use Test::Fatal;
 use Test::Routine;
 use Test::Routine::Util -all;
-use Moonpig::Env::Test;
-use Moonpig::Util qw(class dollars);
-
-with(
-  't::lib::Factory::Ledger',
-);
-
-has ledger => (
-  is => 'ro',
-  does => 'Moonpig::Role::Ledger',
-  lazy => 1,
-  default => sub { $_[0]->test_ledger },
-  clearer => 'scrub_ledger',
-  handles => [ qw(refund_collection) ],
-);
 
 before run_test => sub {
   my ($self) = @_;
