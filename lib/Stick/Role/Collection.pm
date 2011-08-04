@@ -250,18 +250,20 @@ role {
     $self->owner->$add_this_item($arg->{new_item});
   };
 
+  # XXX Fix
   method resource_post => sub {
     my ($self, @args) = @_;
     $self->$post_action(@args);
    };
 
+  # XXX talk to Rik about this
   method STICK_PACK => sub {
     my ($self) = @_;
 
     return {
       what   => $collection_name,
-      owner  => $self->owner->guid,
-      items  => [ map $_->guid, $self->all ] };
+      owner  => $self->owner->guid, # Compose in Moonpig::Role::Collection
+      items  => [ map $_->guid, $self->all ] }; # recurse?
   }
 };
 
