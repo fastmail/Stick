@@ -5,6 +5,7 @@ use warnings;
 use JSON 2 ();
 use Moose::Util qw(apply_all_roles);
 use Moose::Util::TypeConstraints;
+use MooseX::ClassCompositor;
 use Params::Util qw(_ARRAY0 _HASH0);
 use Scalar::Util ();
 use Stick::Entity::Bool;
@@ -76,60 +77,14 @@ sub obj {
   $OBJ_TYPE{ $class } ||= class_type($class);
 }
 
-my $SERIAL = "aa";
-sub class {
-  my (@args) = @_;
-  my @orig_args = @args;
+my $COMPOSITOR = MooseX::ClassCompositor->new({
+  class_basename  => 'Stick::Class',
+  class_metaroles => {
+    class => [ 'MooseX::StrictConstructor::Trait::Class' ],
+  },
+});
 
-  # $role_hash is a hash mapping nonce-names to role objects
-  # $role_names is an array of names of more roles to add
-  my (@roles, @role_class_names, @all_names);
 
-  while (@args) {
-    my $name = shift @args;
-    if (ref $name) {
-      my ($role_name, $moniker, $params) = @$name;
-
-      Class::MOP::load_class($role_name);
-      my $role_object = $role_name->meta->generate_role(
-        parameters => $params,
-      );
-
-      push @roles, $role_object;
-      $name = $moniker;
-    } else {
-      push @role_class_names, $name;
-    }
-
-    $name =~ s/::/_/g if @all_names;
-    $name =~ s/^=//;
-
-    push @all_names, $name;
-  }
-
-  my $name = join q{::}, 'Stick::Class', @all_names;
-
-  Class::MOP::load_class($_) for @role_class_names;
-
-  if ($name->can('meta')) {
-    $name .= "_" . $SERIAL++;
-  }
-  my $class = Moose::Meta::Class->create( $name => (
-    superclasses => [ 'Moose::Object' ],
-  ));
-
-  apply_all_roles($class, @role_class_names, map $_->name, @roles);
-
-  $class = Moose::Util::MetaRole::apply_metaroles(
-    for => $class->name,
-    class_metaroles => {
-      class => [ 'MooseX::StrictConstructor::Trait::Class' ],
-    },
-  );
-
-  $class->make_immutable;
-
-  return $class->name;
-}
+sub class { $COMPOSITOR->class_for(@_) }
 
 1;
