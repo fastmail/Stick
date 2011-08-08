@@ -12,8 +12,7 @@ use POSIX qw(ceil);
 use Scalar::Util qw(blessed);
 
 require Stick::Publisher;
-Stick::Publisher->VERSION(0.20110324);
-use Stick::Publisher::Publish 0.20110324;
+use Stick::Publisher::Publish;
 
 # name of this kind of collection, typically something like "banks"
 parameter collection_name => (
@@ -81,7 +80,6 @@ role {
   sub publish;
 
   require Stick::Role::Routable::AutoInstance;
-  Stick::Role::Routable::AutoInstance->VERSION(0.20110331);
 
   BEGIN {
     require Carp;
