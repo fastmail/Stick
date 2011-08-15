@@ -38,12 +38,6 @@ parameter add_this_item => (
   required => 1,
 );
 
-parameter pagesize => (
-  is => 'rw',
-  isa => PositiveInt,
-  default => 20,
-);
-
 parameter item_roles => (
   isa => ArrayRef [ Str ],
   is => 'ro',
@@ -147,12 +141,6 @@ role {
     return $self->owner->$item_array;
   };
 
-  has default_page_size => (
-    is => 'rw',
-    isa => PositiveInt,
-    default => $p->pagesize,
-  );
-
   publish all => { } => sub {
     my ($self) = @_;
     return @{$self->items};
@@ -195,28 +183,6 @@ role {
     my ($self) = @_;
     my ($last) = reverse $self->all_sorted;
     return $last;
-  };
-
-  # Page numbers start at 1.
-  # TODO: .../collection/page/3 doesn't work yet
-  publish page => { pagesize => Maybe[PositiveInt],
-                    page => PositiveInt,
-                  } => sub {
-    my ($self, $args) = @_;
-    my $pagesize = $args->{pagesize} || $self->default_page_size();
-    my $pagenum = $args->{page};
-    my $items = $self->items;
-    my $start = ($pagenum-1) * $pagesize;
-    my $end = min($start+$pagesize-1, $#$items);
-    return [ @{$items}[$start .. $end] ];
-  };
-
-  # If there are 3 pages, they are numbered 1, 2, 3.
-  publish pages => { pagesize => Maybe[PositiveInt],
-                   } => sub {
-    my ($self, $args) = @_;
-    my $pagesize = $args->{pagesize} || $self->default_page_size();
-    return ceil($self->count / $pagesize);
   };
 
   publish find_by_guid => { guid => Str } => sub {

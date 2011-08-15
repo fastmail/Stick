@@ -19,7 +19,9 @@ with (
     item => 'book',
     item_roles => ['t::lib::Book'],
 #    is => 'ro',
- });
+    collection_roles => [ 'Stick::Role::Collection::Pageable' ],
+  },
+);
 
 sub book_array {
   my ($self) = @_;
