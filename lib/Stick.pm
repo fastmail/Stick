@@ -1,8 +1,8 @@
 use strict;
 use warnings;
 package Stick;
-BEGIN {
-  $Stick::VERSION = '0.300';
+{
+  $Stick::VERSION = '0.302';
 }
 # ABSTRACT: a web framework
 
@@ -17,7 +17,7 @@ Stick - a web framework
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

@@ -1,6 +1,6 @@
 package Stick::Trait::Class::CanQueryPublished;
-BEGIN {
-  $Stick::Trait::Class::CanQueryPublished::VERSION = '0.300';
+{
+  $Stick::Trait::Class::CanQueryPublished::VERSION = '0.302';
 }
 use Moose::Role;
 
@@ -51,7 +51,7 @@ Stick::Trait::Class::CanQueryPublished
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

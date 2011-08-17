@@ -1,6 +1,6 @@
 package Stick::Trait::Application::ToClass;
-BEGIN {
-  $Stick::Trait::Application::ToClass::VERSION = '0.300';
+{
+  $Stick::Trait::Application::ToClass::VERSION = '0.302';
 }
 
 use strict;
@@ -37,7 +37,7 @@ Stick::Trait::Application::ToClass
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

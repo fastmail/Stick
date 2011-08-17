@@ -1,6 +1,6 @@
 package Stick::RoutableThunk;
-BEGIN {
-  $Stick::RoutableThunk::VERSION = '0.300';
+{
+  $Stick::RoutableThunk::VERSION = '0.302';
 }
 use Moose;
 
@@ -34,7 +34,7 @@ Stick::RoutableThunk
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

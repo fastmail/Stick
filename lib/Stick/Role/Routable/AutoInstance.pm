@@ -1,6 +1,6 @@
 package Stick::Role::Routable::AutoInstance;
-BEGIN {
-  $Stick::Role::Routable::AutoInstance::VERSION = '0.300';
+{
+  $Stick::Role::Routable::AutoInstance::VERSION = '0.302';
 }
 use Moose::Role;
 
@@ -9,10 +9,10 @@ use Stick::WrappedMethod;
 use namespace::autoclean;
 
 sub _instance_subroute {
-  my ($self, $path, $npr) = @_;
+  my ($self, $path, $ndr) = @_;
 
   if ($self->can('_extra_instance_subroute')) {
-    my $res = $self->_extra_instance_subroute($path, $npr);
+    my $res = $self->_extra_instance_subroute($path, $ndr);
     return $res if $res;
   }
 
@@ -57,7 +57,7 @@ Stick::Role::Routable::AutoInstance
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

@@ -1,6 +1,6 @@
 package Stick::Publisher;
-BEGIN {
-  $Stick::Publisher::VERSION = '0.300';
+{
+  $Stick::Publisher::VERSION = '0.302';
 }
 use Moose ();
 use Moose::Exporter;
@@ -16,7 +16,7 @@ Moose::Exporter->setup_import_methods(
   },
   role_metaroles => {
     role                 => [ 'Stick::Trait::Role'],
-    attribute            => [ qw(Stick::Trait::Attribute::Publishable) ],
+    applied_attribute    => [ qw(Stick::Trait::Attribute::Publishable) ],
     application_to_class => [ 'Stick::Trait::Application::ToClass' ],
     application_to_role  => [ 'Stick::Trait::Application::ToRole'  ],
   },
@@ -33,7 +33,7 @@ Stick::Publisher
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

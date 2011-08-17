@@ -1,6 +1,6 @@
 package Stick::Error;
-BEGIN {
-  $Stick::Error::VERSION = '0.300';
+{
+  $Stick::Error::VERSION = '0.302';
 }
 use Moose;
 extends 'Throwable::Error';
@@ -69,7 +69,7 @@ Stick::Error
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

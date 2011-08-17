@@ -1,14 +1,16 @@
 package Stick::Types;
-BEGIN {
-  $Stick::Types::VERSION = '0.300';
+{
+  $Stick::Types::VERSION = '0.302';
 }
 # ABSTRACT: type constraints for Stick
 
 use MooseX::Types -declare => [ qw(
   StickBool
+  Factory
+  PositiveInt
 ) ];
 
-use MooseX::Types::Moose qw(Bool Object);
+use MooseX::Types::Moose qw(Bool Int Object Str);
 
 use Stick::Entity::Bool;
 
@@ -19,6 +21,10 @@ subtype StickBool,
 coerce StickBool,
   from Bool,
   via { my $method = $_ ? 'true' : 'false'; Stick::Entity::Bool->$method };
+
+subtype Factory, as Str | Object;
+
+subtype PositiveInt, as Int, where { $_ > 0 };
 
 1;
 
@@ -31,7 +37,7 @@ Stick::Types - type constraints for Stick
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

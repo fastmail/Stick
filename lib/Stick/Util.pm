@@ -1,16 +1,18 @@
 package Stick::Util;
-BEGIN {
-  $Stick::Util::VERSION = '0.300';
+{
+  $Stick::Util::VERSION = '0.302';
 }
 use strict;
 use warnings;
 
 use JSON 2 ();
+use Moose::Util qw(apply_all_roles);
 use Moose::Util::TypeConstraints;
+use MooseX::ClassCompositor;
 use Params::Util qw(_ARRAY0 _HASH0);
+use Scalar::Util ();
 use Stick::Entity::Bool;
 use Stick::Entity::Nop;
-use Scalar::Util ();
 use Try::Tiny;
 
 use Sub::Exporter::Util ();
@@ -23,6 +25,7 @@ use Sub::Exporter -setup => {
     is_nop => Sub::Exporter::Util::curry_method('value_is_nop'),
     obj    => Sub::Exporter::Util::curry_method,
     json_pack => Sub::Exporter::Util::curry_method,
+    'class',
   ],
 };
 
@@ -77,6 +80,16 @@ sub obj {
   $OBJ_TYPE{ $class } ||= class_type($class);
 }
 
+my $COMPOSITOR = MooseX::ClassCompositor->new({
+  class_basename  => 'Stick::Class',
+  class_metaroles => {
+    class => [ 'MooseX::StrictConstructor::Trait::Class' ],
+  },
+});
+
+
+sub class { $COMPOSITOR->class_for(@_) }
+
 1;
 
 __END__
@@ -88,7 +101,7 @@ Stick::Util
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

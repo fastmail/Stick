@@ -1,6 +1,6 @@
 package Stick::Publisher::PublishedMethod;
-BEGIN {
-  $Stick::Publisher::PublishedMethod::VERSION = '0.300';
+{
+  $Stick::Publisher::PublishedMethod::VERSION = '0.302';
 }
 use Moose 1.25;
 extends 'Moose::Meta::Method';
@@ -105,7 +105,7 @@ Stick::Publisher::PublishedMethod
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 

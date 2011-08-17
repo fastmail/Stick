@@ -16,6 +16,8 @@ lib/Stick/Error.pm
 lib/Stick/Publisher.pm
 lib/Stick/Publisher/Publish.pm
 lib/Stick/Publisher/PublishedMethod.pm
+lib/Stick/Role/Collection.pm
+lib/Stick/Role/HasCollection.pm
 lib/Stick/Role/PublicResource.pm
 lib/Stick/Role/PublicResource/GetSelf.pm
 lib/Stick/Role/Routable.pm
@@ -32,8 +34,13 @@ lib/Stick/Types.pm
 lib/Stick/Util.pm
 lib/Stick/WrappedMethod.pm
 t/00-load.t
+t/collections/basic.t
+t/collections/gc.t
+t/collections/page.t
 t/error.t
 t/file.t
+t/lib/Book.pm
+t/lib/Library.pm
 t/lib/PTest/Datum.pm
 t/lib/PTest/Dir.pm
 t/lib/PTest/Dir/FileManager.pm

@@ -1,6 +1,6 @@
 package Stick::Trait::Attribute::Publishable;
-BEGIN {
-  $Stick::Trait::Attribute::Publishable::VERSION = '0.300';
+{
+  $Stick::Trait::Attribute::Publishable::VERSION = '0.302';
 }
 use Moose::Role;
 
@@ -33,7 +33,7 @@ Stick::Trait::Attribute::Publishable
 
 =head1 VERSION
 
-version 0.300
+version 0.302
 
 =head1 AUTHOR
 
