@@ -8,11 +8,14 @@ use Moose::Util::TypeConstraints qw(role_type);
 use MooseX::Role::Parameterized;
 use MooseX::Types::Moose qw(Any ArrayRef Maybe Object Str Undef);
 use Stick::Types qw(PositiveInt);
+use Stick::Util qw(ppack);
 use POSIX qw(ceil);
 use Scalar::Util qw(blessed);
 
 require Stick::Publisher;
 use Stick::Publisher::Publish;
+
+use namespace::autoclean;
 
 # name of this kind of collection, typically something like "banks"
 parameter collection_name => (
@@ -261,7 +264,7 @@ role {
     return {
       what   => $collection_name,
       owner  => $self->owner->guid, # Compose in Moonpig::Role::Collection
-      items  => [ map $_->guid, $self->all ] }; # recurse?
+      items  => [ map {; ppack($_) } $self->all ] }; # recurse?
   }
 };
 
