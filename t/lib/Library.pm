@@ -17,11 +17,11 @@ has by_id => (
 with (
   'Stick::Role::HasCollection' => {
     item => 'book',
-    item_roles => ['t::lib::Book'],
-#    is => 'ro',
-    collection_roles => [ 'Stick::Role::Collection::Pageable' ],
-  },
-);
+    collection_roles => [ 'Stick::Role::Collection::Pageable',
+                          [ 'Stick::Role::Collection::Mutable' =>  "Mutable" =>
+                              { add_this_item => 'add_this_book',
+                                item_roles => ['t::lib::Book'], }
+                             ]]});
 
 sub book_array {
   my ($self) = @_;

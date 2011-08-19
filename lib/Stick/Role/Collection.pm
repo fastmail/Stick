@@ -4,7 +4,6 @@ use warnings;
 
 use Carp 'confess';
 use List::Util qw(min);
-use Moose::Util::TypeConstraints qw(role_type);
 use MooseX::Role::Parameterized;
 use MooseX::Types::Moose qw(Any ArrayRef Maybe Object Str Undef);
 use Stick::Types qw(PositiveInt);
@@ -31,24 +30,6 @@ parameter item_array => (
   required => 1,
 );
 
-parameter item_roles => (
-  isa => ArrayRef [ Str ],
-  is => 'ro',
-  required => 1,
-);
-
-sub item_type {
-  my ($p) = @_;
-  my @roles = map role_type($_), @{$p->item_roles};
-  if (@roles == 0) { return Any }
-  elsif (@roles == 1) { return $roles[0] }
-  else {
-    require Moose::Meta::TypeConstraint::Union;
-    return Moose::Meta::TypeConstraint::Union
-      ->new(type_constraints => \@roles);
-  }
-}
-
 role {
   my ($p, %args) = @_;
 
@@ -64,7 +45,6 @@ role {
 
   my $collection_name = $p->collection_name;
   my $item_array      = $p->item_array;
-  my $item_type       = item_type($p);
 
   has owner => (
     isa => Object,
