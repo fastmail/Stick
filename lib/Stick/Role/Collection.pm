@@ -31,24 +31,10 @@ parameter item_array => (
   required => 1,
 );
 
-# name of the owner method that adds a new item of this type to the owner
-parameter add_this_item => (
-  is => 'ro',
-  isa => Str,
-  required => 1,
-);
-
 parameter item_roles => (
   isa => ArrayRef [ Str ],
   is => 'ro',
   required => 1,
-);
-
-# method that handles POST requests to this collection
-parameter post_action => (
-  isa => Str,
-  is => 'ro',
-  default => 'add',
 );
 
 sub item_type {
@@ -76,11 +62,9 @@ role {
     Carp->import(qw(carp confess croak));
   }
 
-  my $add_this_item   = $p->add_this_item;
   my $collection_name = $p->collection_name;
   my $item_array      = $p->item_array;
   my $item_type       = item_type($p);
-  my $post_action     = $p->post_action;
 
   has owner => (
     isa => Object,
@@ -169,17 +153,6 @@ role {
       if @items > 1;
     return $items[0];
  };
-
-  publish add => { new_item => $item_type } => sub {
-    my ($self, $arg) = @_;
-    $self->owner->$add_this_item($arg->{new_item});
-  };
-
-  # XXX Fix
-  method resource_post => sub {
-    my ($self, @args) = @_;
-    $self->$post_action(@args);
-   };
 
   # XXX talk to Rik about this
   method STICK_PACK => sub {
