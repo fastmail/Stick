@@ -8,6 +8,11 @@ use Test::Routine::Util '-all';
 use t::lib::Library;
 use t::lib::Book;
 
+has library => (
+    is => 'ro',
+    default => sub { $_[0]->fresh_library(4) },
+);
+
 sub all (&@) {
   my $p = shift;
   for (@_) { return unless $p->($_) }
@@ -28,7 +33,7 @@ sub fresh_library {
 
 test "filter" => sub {
   my ($self) = @_;
-  my $lib = $self->fresh_library(4);
+  my $lib = $self->library;
   my $books = $lib->book_collection;
   ok($books->does("Stick::Role::Collection::CanFilter"));
   my $hemingway = $books->filter(sub { $_->author eq "Hemingway" });
@@ -40,6 +45,16 @@ test "filter" => sub {
   for my $book ($hemingway->all) {
     is ($book->author, "Hemingway");
   }
+};
+
+test "subfilter" => sub {
+  my ($self) = @_;
+  my $lib = $self->library;
+  my $books = $lib->book_collection;
+  my $fat_russian = $books->filter(sub { $_->length > 200 })
+      ->filter(sub { $_->author eq "Dostoevsky" });
+  ok($fat_russian->does("Stick::Role::Collection"));
+  is($fat_russian->count, 1);
 };
 
 run_me;
