@@ -28,12 +28,16 @@ sub fresh_library {
 
 test "filter" => sub {
   my ($self) = @_;
-  my $books;
   my $lib = $self->fresh_library(4);
-  my $hemingway = $lib->filter(sub { $_->author eq "Hemingway" });
+  my $books = $lib->book_collection;
+  ok($books->does("Stick::Role::Collection::CanFilter"));
+  my $hemingway = $books->filter(sub { $_->author eq "Hemingway" });
   ok($hemingway->does("Stick::Role::Collection"));
   is($hemingway->count, 2);
-  for my $book ($hemingway->items) {
+  for my $book (@{$hemingway->items}) {
+    is ($book->author, "Hemingway");
+  }
+  for my $book ($hemingway->all) {
     is ($book->author, "Hemingway");
   }
 };

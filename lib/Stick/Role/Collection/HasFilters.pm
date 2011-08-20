@@ -14,12 +14,15 @@ has filters => (
 around items => sub {
   my ($orig, $self, @args) = @_;
   my $items = $self->$orig(@args);
+  return $items unless @{$self->filters};
   return [ grep $self->_item_in_collection($_), @$items ];
 };
 
 sub _item_in_collection {
   my ($self, $item) = @_;
-  $_->($item) || return for @{$self->filters};
+  my $filters = $self->filters;
+  local $_ = $item;
+  for my $f (@$filters) { $f->($_) || return }
   return 1;
 }
 

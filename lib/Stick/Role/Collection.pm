@@ -52,6 +52,12 @@ role {
     required => 1,
   );
 
+  has item_array => (
+    isa => Str,
+    is => 'ro',
+    default => $item_array,
+  );
+
   method _subroute => sub {
     my ($self, @args) = @_;
     confess "Can't route collection class, instances only"
@@ -94,6 +100,7 @@ role {
 
   method items => sub {
     my ($self) = @_;
+    my $item_array = $self->item_array;
     return $self->owner->$item_array;
   };
 
