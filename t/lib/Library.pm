@@ -20,8 +20,9 @@ with (
     collection_roles => [ 'Stick::Role::Collection::Pageable',
                           [ 'Stick::Role::Collection::Mutable' =>  "Mutable" =>
                               { add_this_item => 'add_this_book',
-                                item_roles => ['t::lib::Book'], }
-                             ]]});
+                                item_roles => ['t::lib::Book'], } ],
+                          'Stick::Role::Collection::CanFilter',
+                         ]});
 
 sub book_array {
   my ($self) = @_;
