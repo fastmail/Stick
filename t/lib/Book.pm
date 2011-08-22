@@ -8,4 +8,22 @@ has id => (isa => 'Num',
            default => sub { ++$ID },
           );
 
+has author => (isa => 'Str',
+               is => 'ro',
+              );
+
+has title => (isa => 'Str',
+              is => 'ro',
+             );
+
+has length => (isa => 'Num',
+               is => 'ro',
+              );
+
+sub as_str {
+  my ($self) = @_;
+  sprintf qq{Book #%s "%s", by %s (%s pages)},
+    $self->id, $self->title, $self->author, $self->length;
+}
+
 1;
