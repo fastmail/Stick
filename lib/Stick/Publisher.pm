@@ -1,6 +1,6 @@
 package Stick::Publisher;
 {
-  $Stick::Publisher::VERSION = '0.302';
+  $Stick::Publisher::VERSION = '0.303';
 }
 use Moose ();
 use Moose::Exporter;
@@ -33,7 +33,7 @@ Stick::Publisher
 
 =head1 VERSION
 
-version 0.302
+version 0.303
 
 =head1 AUTHOR
 

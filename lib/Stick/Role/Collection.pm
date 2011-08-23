@@ -1,6 +1,6 @@
 package Stick::Role::Collection;
 {
-  $Stick::Role::Collection::VERSION = '0.302';
+  $Stick::Role::Collection::VERSION = '0.303';
 }
 use strict;
 use warnings;
@@ -282,7 +282,7 @@ Stick::Role::Collection
 
 =head1 VERSION
 
-version 0.302
+version 0.303
 
 =head1 AUTHOR
 

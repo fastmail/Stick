@@ -1,6 +1,6 @@
 package Stick::WrappedMethod;
 {
-  $Stick::WrappedMethod::VERSION = '0.302';
+  $Stick::WrappedMethod::VERSION = '0.303';
 }
 use Moose;
 
@@ -8,6 +8,8 @@ with(
   'Stick::Role::PublicResource',
 );
 
+use Moose::Util::TypeConstraints;
+use MooseX::Types::Moose qw(CodeRef);
 use namespace::autoclean;
 
 has invocant => (
@@ -22,7 +24,7 @@ require Moose::Meta::Method;
 
 has [ map {; "$_\_method" } @methods ] => (
   is  => 'ro',
-  isa => 'Moose::Meta::Method',
+  isa => class_type('Moose::Meta::Method') | CodeRef,
 );
 
 for my $method (@methods) {
@@ -49,7 +51,7 @@ Stick::WrappedMethod
 
 =head1 VERSION
 
-version 0.302
+version 0.303
 
 =head1 AUTHOR
 

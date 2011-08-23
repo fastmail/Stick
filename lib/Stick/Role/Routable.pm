@@ -1,6 +1,6 @@
 package Stick::Role::Routable;
 {
-  $Stick::Role::Routable::VERSION = '0.302';
+  $Stick::Role::Routable::VERSION = '0.303';
 }
 use Moose::Role;
 use HTTP::Throwable::Factory;
@@ -55,7 +55,7 @@ Stick::Role::Routable
 
 =head1 VERSION
 
-version 0.302
+version 0.303
 
 =head1 AUTHOR
 

@@ -1,6 +1,6 @@
 package Stick::Entity::Bool;
 {
-  $Stick::Entity::Bool::VERSION = '0.302';
+  $Stick::Entity::Bool::VERSION = '0.303';
 }
 use Moose;
 
@@ -31,7 +31,7 @@ Stick::Entity::Bool
 
 =head1 VERSION
 
-version 0.302
+version 0.303
 
 =head1 AUTHOR
 

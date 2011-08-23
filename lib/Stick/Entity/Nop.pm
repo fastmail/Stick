@@ -1,6 +1,6 @@
 package Stick::Entity::Nop;
 {
-  $Stick::Entity::Nop::VERSION = '0.302';
+  $Stick::Entity::Nop::VERSION = '0.303';
 }
 use Moose;
 
@@ -25,7 +25,7 @@ Stick::Entity::Nop
 
 =head1 VERSION
 
-version 0.302
+version 0.303
 
 =head1 AUTHOR
 

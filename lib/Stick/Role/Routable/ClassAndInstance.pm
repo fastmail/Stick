@@ -1,6 +1,6 @@
 package Stick::Role::Routable::ClassAndInstance;
 {
-  $Stick::Role::Routable::ClassAndInstance::VERSION = '0.302';
+  $Stick::Role::Routable::ClassAndInstance::VERSION = '0.303';
 }
 use Moose::Role;
 
@@ -32,7 +32,7 @@ Stick::Role::Routable::ClassAndInstance
 
 =head1 VERSION
 
-version 0.302
+version 0.303
 
 =head1 AUTHOR
 
