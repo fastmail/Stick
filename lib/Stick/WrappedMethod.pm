@@ -5,6 +5,8 @@ with(
   'Stick::Role::PublicResource',
 );
 
+use Moose::Util::TypeConstraints;
+use MooseX::Types::Moose qw(CodeRef);
 use namespace::autoclean;
 
 has invocant => (
@@ -19,7 +21,7 @@ require Moose::Meta::Method;
 
 has [ map {; "$_\_method" } @methods ] => (
   is  => 'ro',
-  isa => 'Moose::Meta::Method',
+  isa => class_type('Moose::Meta::Method') | CodeRef,
 );
 
 for my $method (@methods) {
