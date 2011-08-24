@@ -21,7 +21,6 @@ role {
   sub publish;
 
   my $def_sort_key    = $p->default_sort_key;
-  requires 'collection_name';
 
   has sort_key => (
     is => 'rw',

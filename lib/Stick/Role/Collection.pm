@@ -46,6 +46,12 @@ role {
   my $collection_name = $p->collection_name;
   my $item_array      = $p->item_array;
 
+  has collection_name => (
+    isa => Str,
+    is => 'ro',
+    default => sub { $collection_name },
+  );
+
   has owner => (
     isa => Object,
     is => 'ro',
