@@ -37,7 +37,7 @@ role {
 
   publish add => { attributes => HashRef } => sub {
     my ($self, $attrs) = @_;
-    $self->owner->$add_this_item($arg->{attributes});
+    $self->owner->$add_this_item($attrs->{attributes});
   };
 
   # XXX Fix

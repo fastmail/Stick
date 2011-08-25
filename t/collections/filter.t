@@ -24,7 +24,7 @@ sub fresh_library {
   $n ||= 0;
   my $lib = t::lib::Library->new();
   for (1 .. $n) {
-    $lib->add_this_book($self->next_book());
+    $lib->add_this_book({ new_item => $self->next_book() });
   }
   die "Couldn't make library with $n books"
       unless @{$lib->book_array} == $n;

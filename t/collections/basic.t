@@ -22,7 +22,7 @@ test "owner methods" => sub {
   $books = $lib->book_array();
   is(@$books, 0, "empty array");
 
-  $lib->add_this_book(Book->new);
+  $lib->add_this_book({ new_item => Book->new });
   $books = $lib->book_array();
   is(@$books, 1, "now has a book");
 };
@@ -54,10 +54,13 @@ test collection_methods => sub {
 
   $self->try_methods($bc, 0);
 
-  $lib->add_this_book(Book->new);
+  # In general, we will have a more complicated object specification than this
+  # Since the test is in a non-web context we can pass the new object directly.
+  # - mjd 2011-08-25
+  $lib->add_this_book({ new_item => Book->new });
   $self->try_methods($bc, 1);
 
-  $bc->add({ new_item => Book->new });
+  $bc->add({ attributes => { new_item => Book->new }});
   $self->try_methods($bc, 2);
 };
 

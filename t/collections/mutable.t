@@ -17,7 +17,7 @@ test "add_this_item" => sub {
   my ($self) = @_;
   my $lib = $self->fresh_library();
   my $book = Book->new();
-  $lib->add_this_book($book);
+  $lib->add_this_book({ new_item => $book });
   my $books = $lib->book_collection;
   ok($books->does("Stick::Role::Collection"));
   is($books->count, 1);
@@ -30,24 +30,11 @@ test "add" => sub {
   my $lib = $self->fresh_library();
   my $book = Book->new();
   my $books = $lib->book_collection;
-  $books->add({ new_item => $book });
+  $books->add({ attributes => { new_item => $book }});
   is($books->count, 1);
   is($lib->book_array->[0], $book);
   is($books->items->[0], $book);
 };
-
-sub Dummy::id { 119 }
-
-test "type check" => sub {
-  my ($self) = @_;
-  my $lib = $self->fresh_library();
-  like(
-      exception { $lib->add_this_book(bless {} => "Dummy") },
-      qr/type constraint/,
-      "type check failure"
-      );
-};
-
 
 run_me;
 done_testing;
