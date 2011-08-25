@@ -1,4 +1,5 @@
 package Stick::Publisher;
+# ABSTRACT: A class that can publish its methods
 use Moose ();
 use Moose::Exporter;
 

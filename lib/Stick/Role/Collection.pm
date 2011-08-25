@@ -1,4 +1,5 @@
 package Stick::Role::Collection;
+# ABSTRACT: A routable collection of objects
 use strict;
 use warnings;
 

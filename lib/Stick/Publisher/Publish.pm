@@ -1,4 +1,5 @@
 package Stick::Publisher::Publish;
+# ABSTRACT: "publish" keyword to declare published methods
 use Moose ();
 use Moose::Exporter;
 

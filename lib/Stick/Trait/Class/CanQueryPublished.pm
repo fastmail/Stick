@@ -1,4 +1,5 @@
 package Stick::Trait::Class::CanQueryPublished;
+# ABSTRACT: A role for a class that can ask which of its method are published
 use Moose::Role;
 
 sub get_all_published_methods {

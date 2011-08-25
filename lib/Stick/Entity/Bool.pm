@@ -1,4 +1,5 @@
 package Stick::Entity::Bool;
+# ABSTRACT: A boolean value, suitable for wrapping up as JSON
 use Moose;
 
 has is_true => (is => 'ro', isa => 'Bool', required => 1);

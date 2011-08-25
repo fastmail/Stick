@@ -1,4 +1,5 @@
 package Stick::Error;
+# ABSTRACT: Stick exception object
 use Moose;
 extends 'Throwable::Error';
 

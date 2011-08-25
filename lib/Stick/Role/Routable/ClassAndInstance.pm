@@ -1,4 +1,5 @@
 package Stick::Role::Routable::ClassAndInstance;
+# ABSTRACT: A class with with routing from itself and from its instances
 use Moose::Role;
 
 with(

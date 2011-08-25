@@ -1,4 +1,5 @@
 package Stick::Role::Routable;
+# ABSTRACT: An object that can be routed through
 use Moose::Role;
 use HTTP::Throwable::Factory;
 

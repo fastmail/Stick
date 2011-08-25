@@ -1,4 +1,5 @@
 package Stick::Trait::Application::ToClass;
+# ABSTRACT: Machinery for setting up classes with published methods
 
 use strict;
 use warnings;
@@ -16,7 +17,7 @@ around apply => sub {
       for             => $class,
       class_metaroles => {
         class     => [ 'Stick::Trait::Class::CanQueryPublished' ],
-        attribute => [ qw(Stick::Trait::Attribute::Publishable) ],
+        attribute => [ 'Stick::Trait::Attribute::Publishable' ],
       },
     );
 

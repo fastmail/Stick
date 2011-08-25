@@ -1,4 +1,5 @@
 package Stick::Publisher::PublishedMethod;
+# ABSTRACT: A method with a published interface that can handle HTTP requests
 use Moose 1.25;
 extends 'Moose::Meta::Method';
 

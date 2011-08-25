@@ -1,4 +1,5 @@
 package Stick::Role::Routable::AutoInstance;
+# ABSTRACT: A class that provides routes to all its published methods
 use Moose::Role;
 
 use Stick::WrappedMethod;
