@@ -27,7 +27,7 @@ test "page" => sub {
 
   note "About to check page counts";
   for (1..30) {
-    push @r, my $book = $lib->add_this_book({ new_item => Book->new });
+    push @r, my $book = $lib->add_this_book(Book->new);
     is($lib->book_collection->pages,     int($_ / 20))
       if $_ % 20 == 0;
     is($lib->book_collection->pages, 1 + int($_ / 20))

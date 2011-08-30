@@ -18,11 +18,9 @@ with (
   'Stick::Role::HasCollection' => {
     item => 'book',
     collection_roles => [ 'Stick::Role::Collection::Pageable',
-                          [ 'Stick::Role::Collection::Mutable' =>  "Mutable" =>
-                              { add_this_item => 'add_this_book',
-                                item_roles => ['t::lib::Book'], }
-                             ],
+                          'Stick::Role::Collection::Mutable',
                           'Stick::Role::Collection::CanFilter',
+                          't::lib::LibraryExtras',
                          ]});
 
 sub book_array {
@@ -31,8 +29,8 @@ sub book_array {
 }
 
 sub add_this_book {
-  my ($self, $arg) = @_;
-  my $book = $arg->{new_item} || confess "Missing new_item argument to add_this_book";
+  my ($self, $book) = @_;
+#  my $book = $arg->{new_item} || confess "Missing new_item argument to add_this_book";
   $self->store_book($book->id, $book);
 }
 

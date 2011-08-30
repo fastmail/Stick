@@ -17,7 +17,7 @@ test "add_this_item" => sub {
   my ($self) = @_;
   my $lib = $self->fresh_library();
   my $book = Book->new();
-  $lib->add_this_book({ new_item => $book });
+  $lib->add_this_book($book);
   my $books = $lib->book_collection;
   ok($books->does("Stick::Role::Collection"));
   is($books->count, 1);
