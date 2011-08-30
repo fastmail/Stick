@@ -36,6 +36,17 @@ has data => (is => 'ro', isa => 'HashRef', default => sub { {} });
 
 sub type { 'error' };
 
+sub as_string {
+  my ($self, @args) = @_;
+  require Data::Dumper;
+  my @parts = ($self->message);
+  push @parts, "{" . Data::Dumper::Dumper($self->{data}) . "}"
+    if $ENV{STICK_FULL_ERROR_DATA};
+  push @parts, $self->stack_trace->as_string
+    unless $ENV{STICK_SUPPRESS_STACK_TRACE};
+  return join "\n\n", @parts;
+}
+
 sub STICK_PACK {
   my ($self) = @_;
 
