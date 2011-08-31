@@ -4,7 +4,7 @@ use Stick::Types qw(Factory);
 use Stick::Util qw(class);
 use MooseX::Role::Parameterized;
 use MooseX::Types::Moose qw(Str ArrayRef HashRef Defined);
-use Moose::Util::TypeConstraints;
+use Moose::Util::TypeConstraints qw(subtype union);
 
 our $VERSION = 0.20110802;
 
@@ -16,16 +16,13 @@ parameter items => (isa => Str, lazy => 1,
                     default => sub { $_[0]->item . 's' },
                    );
 
-# Items in this collection are expected to implement these roles
-parameter item_roles => (
-  isa => ArrayRef [ Str ],
-  required => 1,
-);
-
 # The collection itelf will compose these roles
 # Good for adding extra constructors or whatever
+
 parameter collection_roles => (
-  isa => ArrayRef [ Str ],
+  isa => ArrayRef[union([Str,
+                         ArrayRef,
+                        ])],
   default => sub { [] },
 );
 
@@ -60,7 +57,6 @@ parameter factory => (
 
     my $parameters = {
       collection_name => $p->item_collection_name,
-      item_roles => $p->item_roles,
       add_this_item => $p->add_this_thing,
       item_array => $p->accessor,
       post_action => $p->post_action,
