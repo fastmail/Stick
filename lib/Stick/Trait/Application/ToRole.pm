@@ -1,6 +1,6 @@
 package Stick::Trait::Application::ToRole;
 {
-  $Stick::Trait::Application::ToRole::VERSION = '0.303';
+  $Stick::Trait::Application::ToRole::VERSION = '0.304';
 }
 
 use strict;
@@ -37,7 +37,7 @@ Stick::Trait::Application::ToRole
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

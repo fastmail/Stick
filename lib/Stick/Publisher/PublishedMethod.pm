@@ -1,7 +1,8 @@
 package Stick::Publisher::PublishedMethod;
 {
-  $Stick::Publisher::PublishedMethod::VERSION = '0.303';
+  $Stick::Publisher::PublishedMethod::VERSION = '0.304';
 }
+# ABSTRACT: A method with a published interface that can handle HTTP requests
 use Moose 1.25;
 extends 'Moose::Meta::Method';
 
@@ -101,11 +102,11 @@ __END__
 
 =head1 NAME
 
-Stick::Publisher::PublishedMethod
+Stick::Publisher::PublishedMethod - A method with a published interface that can handle HTTP requests
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

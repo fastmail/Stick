@@ -28,13 +28,13 @@ my %WriteMakefileArgs = (
   "NAME" => "Stick",
   "PREREQ_PM" => {
     "Carp" => 0,
+    "Data::Dumper" => 0,
     "HTTP::Throwable::Factory" => 0,
     "JSON" => 2,
     "List::Util" => 0,
     "Moose" => "1.25",
     "Moose::Exporter" => 0,
     "Moose::Meta::Method" => 0,
-    "Moose::Meta::TypeConstraint::Union" => 0,
     "Moose::Role" => 0,
     "Moose::Util" => 0,
     "Moose::Util::MetaRole" => 0,
@@ -58,9 +58,9 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.303",
+  "VERSION" => "0.304",
   "test" => {
-    "TESTS" => "t/*.t t/collections/*.t t/routable/*.t t/route/*.t"
+    "TESTS" => "t/*.t t/collections/*.t t/route/*.t"
   }
 );
 

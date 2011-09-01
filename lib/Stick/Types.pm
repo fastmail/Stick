@@ -1,6 +1,6 @@
 package Stick::Types;
 {
-  $Stick::Types::VERSION = '0.303';
+  $Stick::Types::VERSION = '0.304';
 }
 # ABSTRACT: type constraints for Stick
 
@@ -37,7 +37,7 @@ Stick::Types - type constraints for Stick
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

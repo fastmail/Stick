@@ -1,7 +1,8 @@
 package Stick::Role::PublicResource::GetSelf;
 {
-  $Stick::Role::PublicResource::GetSelf::VERSION = '0.303';
+  $Stick::Role::PublicResource::GetSelf::VERSION = '0.304';
 }
+# ABSTRACT: An object for which an HTTP GET method returns the object itself
 use Moose::Role;
 
 use Stick::Error;
@@ -21,11 +22,11 @@ __END__
 
 =head1 NAME
 
-Stick::Role::PublicResource::GetSelf
+Stick::Role::PublicResource::GetSelf - An object for which an HTTP GET method returns the object itself
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

@@ -1,7 +1,8 @@
 package Stick::Util;
 {
-  $Stick::Util::VERSION = '0.303';
+  $Stick::Util::VERSION = '0.304';
 }
+# ABSTRACT: Utility functions used by Stick
 use strict;
 use warnings;
 
@@ -97,11 +98,11 @@ __END__
 
 =head1 NAME
 
-Stick::Util
+Stick::Util - Utility functions used by Stick
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

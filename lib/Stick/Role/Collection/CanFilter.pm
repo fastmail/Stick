@@ -1,13 +1,18 @@
-package Stick::Trait::Role;
+package Stick::Role::Collection::CanFilter;
 {
-  $Stick::Trait::Role::VERSION = '0.304';
+  $Stick::Role::Collection::CanFilter::VERSION = '0.304';
 }
 use Moose::Role;
 
-use namespace::autoclean;
+with ('Stick::Role::Collection::HasFilters');
+sub filter {
+  my ($self, @filters) = @_;
 
-sub composition_class_roles {
-    return 'Stick::Trait::Role::Composite';
+  $self->meta->new_object(
+    owner => $self,
+    item_array => "items",
+    filters => [ @filters ],
+  );
 }
 
 1;
@@ -17,7 +22,7 @@ __END__
 
 =head1 NAME
 
-Stick::Trait::Role
+Stick::Role::Collection::CanFilter
 
 =head1 VERSION
 

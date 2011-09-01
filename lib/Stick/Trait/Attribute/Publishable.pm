@@ -1,7 +1,8 @@
 package Stick::Trait::Attribute::Publishable;
 {
-  $Stick::Trait::Attribute::Publishable::VERSION = '0.303';
+  $Stick::Trait::Attribute::Publishable::VERSION = '0.304';
 }
+# ABSTRACT: A trait for an attribute whose accessor is published
 use Moose::Role;
 
 use Moose::Util::TypeConstraints qw(enum);
@@ -29,11 +30,11 @@ __END__
 
 =head1 NAME
 
-Stick::Trait::Attribute::Publishable
+Stick::Trait::Attribute::Publishable - A trait for an attribute whose accessor is published
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

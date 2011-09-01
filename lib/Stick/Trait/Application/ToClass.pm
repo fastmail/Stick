@@ -1,7 +1,8 @@
 package Stick::Trait::Application::ToClass;
 {
-  $Stick::Trait::Application::ToClass::VERSION = '0.303';
+  $Stick::Trait::Application::ToClass::VERSION = '0.304';
 }
+# ABSTRACT: Machinery for setting up classes with published methods
 
 use strict;
 use warnings;
@@ -19,7 +20,7 @@ around apply => sub {
       for             => $class,
       class_metaroles => {
         class     => [ 'Stick::Trait::Class::CanQueryPublished' ],
-        attribute => [ qw(Stick::Trait::Attribute::Publishable) ],
+        attribute => [ 'Stick::Trait::Attribute::Publishable' ],
       },
     );
 
@@ -33,11 +34,11 @@ __END__
 
 =head1 NAME
 
-Stick::Trait::Application::ToClass
+Stick::Trait::Application::ToClass - Machinery for setting up classes with published methods
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

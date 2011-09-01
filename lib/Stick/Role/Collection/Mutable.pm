@@ -1,10 +1,18 @@
-use strict;
-use warnings;
-package Stick;
+package Stick::Role::Collection::Mutable;
 {
-  $Stick::VERSION = '0.304';
+  $Stick::Role::Collection::Mutable::VERSION = '0.304';
 }
-# ABSTRACT: a web framework
+use Moose::Role;
+
+require Stick::Publisher;
+use Stick::Publisher::Publish;
+
+requires 'add';
+
+sub resource_post {
+  my ($self, @args) = @_;
+  $self->add(@args);
+};
 
 1;
 
@@ -13,7 +21,7 @@ __END__
 
 =head1 NAME
 
-Stick - a web framework
+Stick::Role::Collection::Mutable
 
 =head1 VERSION
 

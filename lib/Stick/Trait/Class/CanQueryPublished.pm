@@ -1,7 +1,8 @@
 package Stick::Trait::Class::CanQueryPublished;
 {
-  $Stick::Trait::Class::CanQueryPublished::VERSION = '0.303';
+  $Stick::Trait::Class::CanQueryPublished::VERSION = '0.304';
 }
+# ABSTRACT: A role for a class that can ask which of its method are published
 use Moose::Role;
 
 sub get_all_published_methods {
@@ -47,11 +48,11 @@ __END__
 
 =head1 NAME
 
-Stick::Trait::Class::CanQueryPublished
+Stick::Trait::Class::CanQueryPublished - A role for a class that can ask which of its method are published
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

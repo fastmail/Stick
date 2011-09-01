@@ -1,7 +1,8 @@
 package Stick::Role::Routable;
 {
-  $Stick::Role::Routable::VERSION = '0.303';
+  $Stick::Role::Routable::VERSION = '0.304';
 }
+# ABSTRACT: An object that can be routed through
 use Moose::Role;
 use HTTP::Throwable::Factory;
 
@@ -51,11 +52,11 @@ __END__
 
 =head1 NAME
 
-Stick::Role::Routable
+Stick::Role::Routable - An object that can be routed through
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

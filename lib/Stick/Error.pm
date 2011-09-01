@@ -1,7 +1,8 @@
 package Stick::Error;
 {
-  $Stick::Error::VERSION = '0.303';
+  $Stick::Error::VERSION = '0.304';
 }
+# ABSTRACT: Stick exception object
 use Moose;
 extends 'Throwable::Error';
 
@@ -38,6 +39,17 @@ has data => (is => 'ro', isa => 'HashRef', default => sub { {} });
 
 sub type { 'error' };
 
+sub as_string {
+  my ($self, @args) = @_;
+  require Data::Dumper;
+  my @parts = ($self->message);
+  push @parts, "{" . Data::Dumper::Dumper($self->{data}) . "}"
+    if $ENV{STICK_FULL_ERROR_DATA};
+  push @parts, $self->stack_trace->as_string
+    unless $ENV{STICK_SUPPRESS_STACK_TRACE};
+  return join "\n\n", @parts;
+}
+
 sub STICK_PACK {
   my ($self) = @_;
 
@@ -65,11 +77,11 @@ __END__
 
 =head1 NAME
 
-Stick::Error
+Stick::Error - Stick exception object
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 

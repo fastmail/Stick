@@ -1,7 +1,8 @@
 package Stick::Publisher::Publish;
 {
-  $Stick::Publisher::Publish::VERSION = '0.303';
+  $Stick::Publisher::Publish::VERSION = '0.304';
 }
+# ABSTRACT: "publish" keyword to declare published methods
 use Moose ();
 use Moose::Exporter;
 
@@ -55,11 +56,11 @@ __END__
 
 =head1 NAME
 
-Stick::Publisher::Publish
+Stick::Publisher::Publish - "publish" keyword to declare published methods
 
 =head1 VERSION
 
-version 0.303
+version 0.304
 
 =head1 AUTHOR
 
