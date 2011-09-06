@@ -13,6 +13,9 @@ use Scalar::Util qw(blessed);
 require Stick::Publisher;
 use Stick::Publisher::Publish;
 
+with ('Stick::Role::Collection::Sortable' => { sort_attr => 'guid' });
+# Sortable will provide the 'publish' utilities
+
 parameter pagesize => (
   is => 'rw',
   isa => PositiveInt,
@@ -22,7 +25,6 @@ parameter pagesize => (
 role {
   my ($p, %args) = @_;
 
-  Stick::Publisher->import({ into => $args{operating_on}->name });
   sub publish;
 
   require Stick::Role::Routable::AutoInstance;
@@ -46,7 +48,7 @@ role {
     my ($self, $args) = @_;
     my $pagesize = $args->{pagesize} || $self->default_page_size();
     my $pagenum = $args->{page};
-    my $items = $self->items;
+    my $items = $self->items_sorted;
     my $start = ($pagenum-1) * $pagesize;
     my $end = min($start+$pagesize-1, $#$items);
     return [ @{$items}[$start .. $end] ];

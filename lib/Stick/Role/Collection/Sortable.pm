@@ -4,11 +4,11 @@ use Carp qw(confess croak);
 use MooseX::Role::Parameterized;
 use MooseX::Types::Moose qw(Str);
 
-# Method that is used to sort the collection (numerically)
-parameter default_sort_key => (
-  isa => Str,
+# Method that is used to sort the collection (alphabetically)
+parameter sort_attr => (
   is => 'ro',
-  required => 1,
+  isa => Str,                   # actually should be a method name
+  default => 'guid',
 );
 
 require Stick::Publisher;
@@ -20,7 +20,7 @@ role {
   Stick::Publisher->import({ into => $args{operating_on}->name });
   sub publish;
 
-  my $def_sort_key    = $p->default_sort_key;
+  my $sort_attr    = $p->sort_attr;
 
   has sort_key => (
     is => 'rw',
@@ -29,7 +29,7 @@ role {
     # method name is invalid, but that doesn't work in roles (see
     # tinker/method-name-for). MJD 20110523
     isa => Str,
-    default => $def_sort_key,
+    default => $sort_attr,
    );
 
   publish first => { -path => 'first' } => sub {
@@ -44,6 +44,11 @@ role {
     return $last;
   };
 
+  publish items_sorted => { } => sub {
+    my ($self) = @_;
+    return [ $self->all_sorted ];
+  };
+
   publish all_sorted => { } => sub {
     my ($self) = @_;
     my $collection_name = $self->collection_name;
@@ -53,7 +58,7 @@ role {
     return () unless @all;
     $all[0]->can($meth)
       or croak "Objects ($all[0]) in collection '$collection_name' don't support a '$meth' sort key";
-    return sort { $a->$meth <=> $b->$meth } @all;
+    return sort { $a->$meth cmp $b->$meth } @all;
   };
 };
 
