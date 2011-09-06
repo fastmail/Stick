@@ -6,8 +6,6 @@ use MooseX::Role::Parameterized;
 use MooseX::Types::Moose qw(Str ArrayRef HashRef Defined);
 use Moose::Util::TypeConstraints qw(subtype union);
 
-our $VERSION = 0.20110802;
-
 # Name of the sort of thing this collection will contain
 # e.g., "refund".
 parameter item => (isa => Str, required => 1);
