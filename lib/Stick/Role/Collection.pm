@@ -121,34 +121,36 @@ role {
     return scalar @{$self->items};
   };
 
+  method single => sub {
+    my ($self, $msg) = @_;
+    my (@items) = $self->all;
+    confess $msg
+      // "Found multiple objects in collection '$collection_name', expected at most one"
+        if @items > 1;
+    return $items[0];
+  };
+
   publish find_by_guid => { guid => Str } => sub {
     my ($self, $arg) = @_;
     my $guid = $arg->{guid};
-    my (@items) = grep { $_->guid eq $guid } $self->all;
-    die "Found multiple objects in collection '$collection_name' with guid $guid"
-      if @items > 1;
-    return $items[0];
+    return $self->filter(sub { $_->guid eq $guid })
+      ->single("Found multiple objects in collection '$collection_name' with guid $guid");
   };
 
   publish find_by_xid => { xid => Str } => sub {
     my ($self, $arg) = @_;
     my $xid = $arg->{xid};
-    my (@items) = grep { $_->xid eq $xid } $self->all;
-    die "Found multiple objects in collection '$collection_name' with xid $xid"
-      if @items > 1;
-    return $items[0];
+    return $self->filter(sub { $_->xid eq $xid })
+      ->single("Found multiple objects in collection '$collection_name' with xid $xid");
  };
 
   publish find_active_by_xid => { xid => Str } => sub {
     my ($self, $arg) = @_;
     my $xid = $arg->{xid};
-    my (@items) = grep { $_->xid eq $xid && $_->is_active } $self->all;
-    die "Found multiple active objects in collection '$collection_name' with xid $xid"
-      if @items > 1;
-    return $items[0];
+    return $self->filter(sub { $_->xid eq $xid && $_->is_active })
+      ->single("Found multiple active objects in collection '$collection_name' with xid $xid");
  };
 
-  # XXX talk to Rik about this
   method STICK_PACK => sub {
     my ($self) = @_;
 
