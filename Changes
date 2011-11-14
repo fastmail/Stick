@@ -1,6 +1,8 @@
 Revision history for Stick
 
 {{$NEXT}}
+
+0.308     2011-11-14 17:01:27 America/New_York
           properly re-apply "role" metarole when summing roles with Publisher
 
 0.307     2011-09-07 12:26:49 America/New_York
