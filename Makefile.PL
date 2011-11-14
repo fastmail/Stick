@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.30;
 
 my %WriteMakefileArgs = (
   "ABSTRACT" => "a web framework",
-  "AUTHOR" => "Ricardo Signes <rjbs\@cpan.org>",
+  "AUTHOR" => "Ricardo Signes <rjbs\@cpan.org>, Mark Jason Dominus <mjd\@cpan.org>",
   "BUILD_REQUIRES" => {
     "Role::Subsystem" => 0,
     "Test::Deep" => 0,
@@ -58,7 +58,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.304",
+  "VERSION" => "0.308",
   "test" => {
     "TESTS" => "t/*.t t/collections/*.t t/route/*.t"
   }

@@ -1,6 +1,6 @@
 package Stick::Trait::Role::Composite;
 {
-  $Stick::Trait::Role::Composite::VERSION = '0.304';
+  $Stick::Trait::Role::Composite::VERSION = '0.308';
 }
 use Moose::Role;
 
@@ -39,15 +39,25 @@ Stick::Trait::Role::Composite
 
 =head1 VERSION
 
-version 0.304
+version 0.308
 
-=head1 AUTHOR
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Ricardo Signes <rjbs@cpan.org>
 
+=item *
+
+Mark Jason Dominus <mjd@cpan.org>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Ricardo Signes.
+This software is copyright (c) 2011 by Ricardo Signes, Mark Jason Dominus.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

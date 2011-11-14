@@ -1,12 +1,13 @@
 package Stick::Role::HasCollection;
+{
+  $Stick::Role::HasCollection::VERSION = '0.308';
+}
 # ABSTRACT: A class which owns a (routable) collection of objects
 use Stick::Types qw(Factory);
 use Stick::Util qw(class);
 use MooseX::Role::Parameterized;
 use MooseX::Types::Moose qw(Str ArrayRef HashRef Defined);
 use Moose::Util::TypeConstraints qw(subtype union);
-
-our $VERSION = 0.20110802;
 
 # Name of the sort of thing this collection will contain
 # e.g., "refund".
@@ -149,15 +150,25 @@ Stick::Role::HasCollection - A class which owns a (routable) collection of objec
 
 =head1 VERSION
 
-version 0.304
+version 0.308
 
-=head1 AUTHOR
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Ricardo Signes <rjbs@cpan.org>
 
+=item *
+
+Mark Jason Dominus <mjd@cpan.org>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Ricardo Signes.
+This software is copyright (c) 2011 by Ricardo Signes, Mark Jason Dominus.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

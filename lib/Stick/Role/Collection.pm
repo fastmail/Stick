@@ -1,6 +1,6 @@
 package Stick::Role::Collection;
 {
-  $Stick::Role::Collection::VERSION = '0.304';
+  $Stick::Role::Collection::VERSION = '0.308';
 }
 # ABSTRACT: A routable collection of objects
 use strict;
@@ -124,34 +124,36 @@ role {
     return scalar @{$self->items};
   };
 
+  method single => sub {
+    my ($self, $msg) = @_;
+    my (@items) = $self->all;
+    confess $msg
+      // "Found multiple objects in collection '$collection_name', expected at most one"
+        if @items > 1;
+    return $items[0];
+  };
+
   publish find_by_guid => { guid => Str } => sub {
     my ($self, $arg) = @_;
     my $guid = $arg->{guid};
-    my (@items) = grep { $_->guid eq $guid } $self->all;
-    die "Found multiple objects in collection '$collection_name' with guid $guid"
-      if @items > 1;
-    return $items[0];
+    return $self->filter(sub { $_->guid eq $guid })
+      ->single("Found multiple objects in collection '$collection_name' with guid $guid");
   };
 
   publish find_by_xid => { xid => Str } => sub {
     my ($self, $arg) = @_;
     my $xid = $arg->{xid};
-    my (@items) = grep { $_->xid eq $xid } $self->all;
-    die "Found multiple objects in collection '$collection_name' with xid $xid"
-      if @items > 1;
-    return $items[0];
+    return $self->filter(sub { $_->xid eq $xid })
+      ->single("Found multiple objects in collection '$collection_name' with xid $xid");
  };
 
   publish find_active_by_xid => { xid => Str } => sub {
     my ($self, $arg) = @_;
     my $xid = $arg->{xid};
-    my (@items) = grep { $_->xid eq $xid && $_->is_active } $self->all;
-    die "Found multiple active objects in collection '$collection_name' with xid $xid"
-      if @items > 1;
-    return $items[0];
+    return $self->filter(sub { $_->xid eq $xid && $_->is_active })
+      ->single("Found multiple active objects in collection '$collection_name' with xid $xid");
  };
 
-  # XXX talk to Rik about this
   method STICK_PACK => sub {
     my ($self) = @_;
 
@@ -173,15 +175,25 @@ Stick::Role::Collection - A routable collection of objects
 
 =head1 VERSION
 
-version 0.304
+version 0.308
 
-=head1 AUTHOR
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Ricardo Signes <rjbs@cpan.org>
 
+=item *
+
+Mark Jason Dominus <mjd@cpan.org>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Ricardo Signes.
+This software is copyright (c) 2011 by Ricardo Signes, Mark Jason Dominus.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

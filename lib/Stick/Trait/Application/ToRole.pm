@@ -1,6 +1,6 @@
 package Stick::Trait::Application::ToRole;
 {
-  $Stick::Trait::Application::ToRole::VERSION = '0.304';
+  $Stick::Trait::Application::ToRole::VERSION = '0.308';
 }
 
 use strict;
@@ -18,6 +18,7 @@ around apply => sub {
     $role2 = Moose::Util::MetaRole::apply_metaroles(
       for            => $role2,
       role_metaroles => {
+        role                 => [ 'Stick::Trait::Role'],
         application_to_class => [ 'Stick::Trait::Application::ToClass' ],
         application_to_role  => [ 'Stick::Trait::Application::ToRole' ],
       },
@@ -37,15 +38,25 @@ Stick::Trait::Application::ToRole
 
 =head1 VERSION
 
-version 0.304
+version 0.308
 
-=head1 AUTHOR
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Ricardo Signes <rjbs@cpan.org>
 
+=item *
+
+Mark Jason Dominus <mjd@cpan.org>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Ricardo Signes.
+This software is copyright (c) 2011 by Ricardo Signes, Mark Jason Dominus.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

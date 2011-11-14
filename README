@@ -1,11 +1,11 @@
 
 
 This archive contains the distribution Stick,
-version 0.304:
+version 0.308:
 
   a web framework
 
-This software is copyright (c) 2011 by Ricardo Signes.
+This software is copyright (c) 2011 by Ricardo Signes, Mark Jason Dominus.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

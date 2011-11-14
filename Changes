@@ -1,5 +1,14 @@
 Revision history for Stick
 
+0.308     2011-11-14 17:01:27 America/New_York
+          properly re-apply "role" metarole when summing roles with Publisher
+
+0.307     2011-09-07 12:26:49 America/New_York
+
+0.306     2011-09-06 16:47:57 America/New_York
+
+0.305     2011-09-06 16:42:59 America/New_York
+
 0.304     2011-09-01 14:25:26 America/New_York
 
 0.303     2011-08-23 06:47:23 America/New_York

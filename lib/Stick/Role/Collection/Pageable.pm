@@ -1,6 +1,6 @@
 package Stick::Role::Collection::Pageable;
 {
-  $Stick::Role::Collection::Pageable::VERSION = '0.304';
+  $Stick::Role::Collection::Pageable::VERSION = '0.308';
 }
 use strict;
 use warnings;
@@ -16,6 +16,9 @@ use Scalar::Util qw(blessed);
 require Stick::Publisher;
 use Stick::Publisher::Publish;
 
+with ('Stick::Role::Collection::Sortable' => { sort_attr => 'guid' });
+# Sortable will provide the 'publish' utilities
+
 parameter pagesize => (
   is => 'rw',
   isa => PositiveInt,
@@ -25,7 +28,6 @@ parameter pagesize => (
 role {
   my ($p, %args) = @_;
 
-  Stick::Publisher->import({ into => $args{operating_on}->name });
   sub publish;
 
   require Stick::Role::Routable::AutoInstance;
@@ -49,7 +51,7 @@ role {
     my ($self, $args) = @_;
     my $pagesize = $args->{pagesize} || $self->default_page_size();
     my $pagenum = $args->{page};
-    my $items = $self->items;
+    my $items = $self->items_sorted;
     my $start = ($pagenum-1) * $pagesize;
     my $end = min($start+$pagesize-1, $#$items);
     return [ @{$items}[$start .. $end] ];
@@ -75,15 +77,25 @@ Stick::Role::Collection::Pageable
 
 =head1 VERSION
 
-version 0.304
+version 0.308
 
-=head1 AUTHOR
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Ricardo Signes <rjbs@cpan.org>
 
+=item *
+
+Mark Jason Dominus <mjd@cpan.org>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Ricardo Signes.
+This software is copyright (c) 2011 by Ricardo Signes, Mark Jason Dominus.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
