@@ -15,6 +15,7 @@ around apply => sub {
     $role2 = Moose::Util::MetaRole::apply_metaroles(
       for            => $role2,
       role_metaroles => {
+        role                 => [ 'Stick::Trait::Role'],
         application_to_class => [ 'Stick::Trait::Application::ToClass' ],
         application_to_role  => [ 'Stick::Trait::Application::ToRole' ],
       },
