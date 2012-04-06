@@ -28,4 +28,13 @@ sub as_str {
     $self->id, $self->title, $self->author, $self->length;
 }
 
+sub STICK_PACK {
+  my ($self) = @_;
+  return {
+    author => $self->author,
+    title  => $self->title,
+    length => $self->length,
+  };
+}
+
 1;

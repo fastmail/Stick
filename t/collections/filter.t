@@ -5,6 +5,8 @@ use Test::More;
 use Test::Routine;
 use Test::Routine::Util '-all';
 
+use Stick::Util qw(ppack);
+
 use t::lib::Library;
 use t::lib::Book;
 

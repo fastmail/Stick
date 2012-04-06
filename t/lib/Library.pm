@@ -2,7 +2,9 @@ package t::lib::Library;
 # ABSTRACT: Class for testing HasCollection
 use Moose;
 use Moose::Util::TypeConstraints qw(role_type);
-use MooseX::Types::Moose qw(HashRef);
+use MooseX::Types::Moose qw(HashRef Str);
+
+use Data::GUID ();
 
 has by_id => (
   is => 'ro',
@@ -12,6 +14,13 @@ has by_id => (
   handles => {
     store_book => 'set',
   },
+);
+
+has guid => (
+  is  => 'ro',
+  isa => Str,
+  init_arg => undef,
+  default  => sub { Data::GUID->new->as_string },
 );
 
 with (
