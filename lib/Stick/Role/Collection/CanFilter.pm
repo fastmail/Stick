@@ -7,9 +7,9 @@ sub filter {
   my ($self, @filters) = @_;
 
   $self->meta->new_object(
-    owner => $self,
-    item_array => "items",
-    filters => [ @filters ],
+    owner => $self->owner,
+    item_array => $self->item_array,
+    filters => [ @{ $self->filters }, @filters ],
   );
 }
 
