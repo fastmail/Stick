@@ -15,6 +15,7 @@ sub STICK_PACK { $_[0] }
 
 use overload
   bool => sub { $_[0]->is_true },
+  '!'  => sub { $_[0]->is_true ? $FALSE : $TRUE },
   '""' => sub { $_[0]->is_true ? 'TRUE' : 'FALSE' },
   '==' => sub { not($_[0] xor $_[1]) }; # Crazy?  -- rjbs, 2010-05-16
 
