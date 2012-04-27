@@ -69,13 +69,16 @@ sub _sig_wrapper {
     $error{$_} = 'unknown' for keys %unknown;
 
     if (keys %error) {
+      # This "method_names" thing is a gross hack that should be removed when
+      # there is a better mechanism. -- rjbs, 2012-04-27
       Stick::Error->throw({
         ident   => 'invalid method call',
-        message => 'invalid arguments to method %{method}s',
+        message => 'invalid arguments to method %{method}s: %{method_names}s',
         public  => 1,
         data    => {
           method => $arg->{name},
           errors => \%error,
+          method_names => join(q{, }, keys %error),
         },
       });
     } else {
