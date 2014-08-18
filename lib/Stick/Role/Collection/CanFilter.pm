@@ -1,4 +1,5 @@
 package Stick::Role::Collection::CanFilter;
+
 use Moose::Role;
 
 with ('Stick::Role::Collection::HasFilters');

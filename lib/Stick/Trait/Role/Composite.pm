@@ -1,4 +1,5 @@
 package Stick::Trait::Role::Composite;
+
 use Moose::Role;
 
 use Moose::Util::MetaRole;

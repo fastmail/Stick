@@ -1,4 +1,5 @@
 package Stick::Entity::Nop;
+
 use Moose;
 
 has reason => (

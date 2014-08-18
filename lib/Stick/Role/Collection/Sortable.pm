@@ -1,5 +1,5 @@
-
 package Stick::Role::Collection::Sortable;
+
 use Carp qw(confess croak);
 use MooseX::Role::Parameterized;
 use MooseX::Types::Moose qw(Str);

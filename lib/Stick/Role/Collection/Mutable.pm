@@ -1,4 +1,5 @@
 package Stick::Role::Collection::Mutable;
+
 use Moose::Role;
 
 require Stick::Publisher;

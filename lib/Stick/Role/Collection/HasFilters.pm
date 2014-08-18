@@ -1,4 +1,5 @@
 package Stick::Role::Collection::HasFilters;
+
 use Moose::Role;
 use MooseX::Types::Moose qw(ArrayRef CodeRef);
 

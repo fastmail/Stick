@@ -1,5 +1,6 @@
 package Stick::Role::PublicResource;
 # ABSTRACT: An object to which HTTP requests can be routed
+
 use Moose::Role;
 
 use Stick::Error;

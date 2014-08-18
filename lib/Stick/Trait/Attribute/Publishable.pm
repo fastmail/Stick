@@ -1,5 +1,6 @@
 package Stick::Trait::Attribute::Publishable;
 # ABSTRACT: A trait for an attribute whose accessor is published
+
 use Moose::Role;
 
 use Moose::Util::TypeConstraints qw(enum);

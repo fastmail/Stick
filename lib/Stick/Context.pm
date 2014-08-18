@@ -1,4 +1,5 @@
 package Stick::Context;
+
 use Moose;
 
 # ???

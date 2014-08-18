@@ -1,5 +1,6 @@
 package Stick::Util;
 # ABSTRACT: Utility functions used by Stick
+
 use strict;
 use warnings;
 

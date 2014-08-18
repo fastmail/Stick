@@ -1,4 +1,5 @@
 package Stick::Role::Collection::Pageable;
+
 use strict;
 use warnings;
 

@@ -1,4 +1,5 @@
 package Stick::Trait::Role;
+
 use Moose::Role;
 
 use namespace::autoclean;

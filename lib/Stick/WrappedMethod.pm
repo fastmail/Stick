@@ -1,5 +1,6 @@
 package Stick::WrappedMethod;
 # ABSTRACT: a handler for an HTTP request
+
 use Moose;
 
 with(
